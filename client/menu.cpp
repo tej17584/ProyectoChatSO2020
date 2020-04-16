@@ -95,12 +95,14 @@ int main() {
             //Mensaje directo
             case 1:
                 printf("MENSAJE DIRECTO\n");
-                printf("Ingrese el nombre de usuario seguido del mensaje que desea enviar\n");
-                printf("Ejemplo: Alejandro Hola\n");
+                printf("Ingrese el nombre de usuario\n");
                 printf("\n");
-
-                scanf( "%99s", input );
-                printf("%s", input);
+                scanf( "%99s", input1 );
+                printf("\n");
+                
+                printf("ingrese el mensaje que desea enviar\n");
+                scanf( "%99s", input1 );
+                printf("\n");
                 break;
              
             //Broadcast
