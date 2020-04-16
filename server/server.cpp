@@ -107,8 +107,6 @@ int main(int argc, char *argv[])
 	//!! convert int to network byte to use
 	serv_addr.sin_port = htons(portno);
 
-	bind(int fd, struct sockaddr *local_addr, socklen_t addr_length)
-
 	if (bind(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
 		error("ERROR, No se pudo realizar la función Bind");
 
