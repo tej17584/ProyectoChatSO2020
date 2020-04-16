@@ -1,0 +1,57 @@
+Registro de Usuarios:
+	-Usuario registrado correctamente
+	-El usuario ya existe
+	-ERROR 502 comunicacion interrumpida
+	-ERROR 400 en este momento el cliente no puede establecer conexion con el servidor
+	-ERROR 500 el servidor no responde, intente mas tarde
+
+Liberacion de usuario (salir del chat):
+	-Está seguro que quiere salir?
+	-Si
+	-No
+	-Salio exitosamente
+
+Listado de usuarios:
+	-Lista de usuarios conetados
+	-No hay ningun usuario conectado (suponiendo que no se muestra si mismo)
+	-ERROR 502 comunicacion interrumpida
+	-ERROR 400 en este momento el cliente no puede establecer conexion con el servidor
+	-ERROR 500 el servidor no responde, intente mas tarde
+
+Obtención de información de usuario:
+	-El usuario no esta registrado
+	-Usuario registrado
+	-ERROR 502 comunicacion interrumpida
+	-ERROR 400 en este momento el cliente no puede establecer conexion con el servidor
+	-ERROR 500 el servidor no responde, intente mas tarde
+
+Cambio de Status:
+	-Cambio de estatus exitoso
+	-No se pudo realizar el cambio de status
+	-Activo
+	-Ocipado
+	-Inactivo
+	-ERROR 502 comunicacion interrumpida
+	-ERROR 400 en este momento el cliente no puede establecer conexion con el servidor
+	-ERROR 500 el servidor no responde, intente mas tarde 
+
+Broadcasting:
+	-Chat creado correctamente
+	-No se pudo crear
+	-No hay mas usuarios conectados
+	-ERROR 502 comunicacion interrumpida
+	-ERROR 400 en este momento el cliente no puede establecer conexion con el servidor
+	-ERROR 500 el servidor no responde, intente mas tarde 
+
+
+Mensajes directos:
+	-Usuario existente
+	-Usuario inexistente
+	-Mensaje enviado
+	-Mensaje recibido
+	-ERROR 502 comunicacion interrumpida
+	-ERROR 400 en este momento el cliente no puede establecer conexion con el servidor
+	-ERROR 500 el servidor no responde, intente mas tarde 
+
+
+
