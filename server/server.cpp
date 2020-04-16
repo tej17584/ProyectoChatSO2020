@@ -1,4 +1,4 @@
-// To compile: g++ -o server server.cpp -lpthread -lns
+// To compile: g++ -o server server.cpp -lpthread 
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
