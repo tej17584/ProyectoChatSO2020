@@ -1,39 +1,43 @@
 #include <iostream>
-#include <math.h>
 #include <stdio.h>
 
 using namespace std;
 
-void confirmacion() {
+//metodos donde se imprime un mensaje dependiendo del estado del servidor
+void confirmacion()  {
     cout << "Enviando confirmación\n";
 }
 
-void respuesta() {
+void respuesta()  {
     cout << "El servidor ha recibido la solicitud\n";
 }
 
-void envio() {
+void envio()  {
     cout << "Enviando solicitud al servidor\n";
 }
 
-void cambioEstatus(){
-    
+//metodo para hacer cambio de estatus
+void cambioEstatus() {
+    //variable para ver la opcion que se desea realizar
     int var;
+    //variable donde se guarda el estado
+    string input3;
     
+    //menu de cambio de estado
     do
     {
-       printf("Cambio de estatus\n");
-        printf("Ingrese el numero de la opcion que desea:\n");
-        printf("1. Activo\n");
-        printf("2. Ocupado\n");
-        printf("3. Inactivo\n");
-        printf("4. Salir\n");
-        printf("\n");
+        cout << "Cambio de estatus\n";
+        cout << "Ingrese el numero de la opcion que desea:\n";
+        cout << "1. Activo\n" ;
+        cout << "2. Ocupado\n" ;
+        cout << "3. Inactivo\n" ;
+        cout << "4. Salir\n" ;
+        cout << "\n" ;
         
         do{
-            printf( "Introduzca la opcion que desea ejecutar (1-4): \n");
-            scanf( "%d", &var );
-            cout << "\n";
+            cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
+            cin >> var;
+            cout <<  "\n";
         }
         
         while ( var < 1 || var > 4 );
@@ -42,50 +46,62 @@ void cambioEstatus(){
             {
                 //Activo
                 case 1:
-                    printf("Cambio a estatus Activo\n");
+                    cout << "Cambio a estatus Activo\n" ;
+                    input3 = "Activo";
                     var = 4;
                     break;
                  
                 //Ocupado
                 case 2:
-                    printf("Cambio a estatus Ocupado\n");
+                    cout << "Cambio a estatus Ocupado\n" ;
+                    input3 = "Ocupado";
                     var = 4;
                     break;
                 
                 //Inactivo
                 case 3:
-                    printf("Cambio a estatus Inactivo\n");
+                    cout << "Cambio a estatus Inactivo\n" ;
+                    input3 = "Inactivo";
                     var = 4;
                     break;
             }
         } while ( var != 4 );
 }
 
-int main() {
+int main()  {
+    //variable para ver la opcion que se desea realizar
+    int opcion;
     
-    int n, opcion;
-    char input [100];
+    //variables donde se guarda el input del usuario
+    char input11 [20];
+    string input12 = "";
     
+
+    string input2 = "";
+    
+    char input5 [20];
+    
+    //menu principal del chat
     do
     {
-        printf("\n");
-        printf("---------------------------------------------------\n");
-        printf("Bienvenido a Chat SISTOS\n");
-        printf("---------------------------------------------------\n");
-        printf("\n");
-        printf("Ingrese el numero de la opcion que deasea ejecutar\n");
-        printf("1. Mensaje directo\n");
-        printf("2. Broadcasting (Chat general)\n");
-        printf("3. Cambio de status\n");
-        printf("4. Listado de usuarios\n");
-        printf("5. Informacion de un usuario\n");
-        printf("6. Salir \n");
-        printf("\n");
+        cout << "\n";
+        cout << "---------------------------------------------------\n";
+        cout << "Bienvenido a Chat SISTOS\n";
+        cout << "---------------------------------------------------\n";
+        cout << "\n";
+        cout << "Ingrese el numero de la opcion que deasea ejecutar\n";
+        cout << "1. Mensaje directo\n";
+        cout << "2. Broadcasting (Chat general) \n";
+        cout << "3. Cambio de status\n";
+        cout << "4. Listado de usuarios\n";
+        cout << "5. Informacion de un usuario\n";
+        cout << "6. Salir \n";
+        cout << "\n";
         
         do{
-            printf( "Introduzca la opcion que desea ejecutar (1-6): \n");
-            scanf( "%d", &opcion );
-            cout << "\n";
+            cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
+            cin >> opcion;
+            cout <<  "\n";
         }
         
         while ( opcion < 1 || opcion > 6 );
@@ -94,25 +110,38 @@ int main() {
         {
             //Mensaje directo
             case 1:
-                printf("MENSAJE DIRECTO\n");
-                printf("Ingrese el nombre de usuario\n");
-                printf("\n");
-                scanf( "%99s", input1 );
-                printf("\n");
+                cout << "MENSAJE DIRECTO\n";
+                cout << "Ingrese el nombre de usuario\n";
+                cin.sync();
+                cin >> input11;
+                cout << "\n";
                 
-                printf("ingrese el mensaje que desea enviar\n");
-                scanf( "%99s", input1 );
-                printf("\n");
+                cout << "Ingrese el mensaje que desea enviar\n";
+                while (getline(cin, input12))
+                if (input12 != "")
+                  break;
+                cout << "\n";
+                
+                cout << "Usuario:\n";
+                cout << input11;
+                cout << "\n";
+                cout << "Mensaje:\n";
+                cout << input12;
+                cout << "\n";
                 break;
              
             //Broadcast
             case 2:
-                printf("Broadcast");
-                printf("Ingrese el mensaje que desea enviar\n");
-                printf("\n");
-
-                scanf( "%99s", input );
-                printf("%s", input);
+                cout << "BROADCAST\n" ;
+                cout << "Ingrese el mensaje que desea enviar\n";
+                while (getline(cin, input2))
+                if (input2 != "")
+                  break;
+                cout << "\n";
+                
+                cout << "Mensaje:\n";
+                cout << input2;
+                cout << "\n";
                 break;
             
             //Cambio de estatus
@@ -122,96 +151,20 @@ int main() {
                
             //Listado de usuarios
             case 4:
-                printf("Listado de usuarios");
+                cout << "Listado de usuarios registrados\n";
                 break;
               
             //Informacion de usuario
             case 5:
-                printf("Informacion de usuario\n");
-                printf("Ingrese nombre de usuario\n");
+                cout << "Informacion de usuario\n";
+                cout << "Ingrese nombre de usuario\n";
 
-                scanf( "%99s", input );
-                printf("%s", input);
+                cin >>  input5;
+                cout << "\n";
+                cout << input5;
                 break;
         }
     } while ( opcion != 6 );
     
     return 0;
 }
-
-    /*
-    while (adentro == true) {
-        menu();
-        
-        cout << "Opcion: ";
-        cin >> opcion;
-        cout << "\n";
-
-        if (opcion == 0) {
-            adentro = false;
-        }
-        
-        //Mensaje directo
-        else if (opcion == 1) {
-            printf << "MENSAJE DIRECTO\n";
-            printf << "Ingrese el nombre de usuario seguido del mensaje que desea enviar\n";
-            printf << "Ejemplo: Alejandro Hola\n";
-            printf << "\n";
-            
-            cin >> x;
-            cout << x;
-        }
-        
-        //Broadcast
-        else if (opcion == 2) {
-            cout << "MENSAJE DIRECTO\n";
-            cout << "Ingrese el mensaje que desea enviar\n";
-            cout << "\n";
-            
-            cin >> x;
-            cout << x;
-        }
-        
-        //Cambio de status
-        else if (opcion == 3) {
-            cout << "MENSAJE DIRECTO\n";
-            cout << "Ingrese el numero de la opcion que desea:\n";
-            cout << "1. Activo\n";
-            cout << "2. Ocupado\n";
-            cout << "3. Inactivo\n";
-            cout << "\n";
-            
-            cout << "Opcion: ";
-            cin >> x;
-            if (x > 3) {
-                cout << "Ingrese un numero valido\n"
-            }
-            else{
-                cout << x;
-            }
-        }
-        
-        //Listado de usuarios
-        else if (opcion == 4) {
-            cout << "Listado de los usuarios conectados:\n";
-            cout << "\n";
-        }
-        
-        //Informacion de un usuario
-        else if (opcion == 5) {
-            cout << "Informacion de un usuario:\n";
-            cout << "Ingrese el nombre del usuario que desea ver\n";
-            
-            cin >> x;
-            cout << x;
-        }
-        
-        //validacion
-        else if (opcion > 5) {
-            cout << "ERROR. Ingrese un numero valido";
-        }
-    }
-    return 0;
-}
-
-*/
