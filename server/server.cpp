@@ -1,4 +1,4 @@
-// To compile: g++ -o server server.cpp -lpthread 
+// To compile: g++ -o server server.cpp -lpthread
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,11 +14,11 @@
 using namespace std;
 // #include "mensaje.pb.h"
 
-// ------------------------------------------------S T A R T -----------------------------------------// 
+// ------------------------------------------------S T A R T -----------------------------------------//
 #define MAX_CLIENTS 35 // number of students in class (assuming each one will be a client)
 #define BUFSIZE 1024
 
-//this method define error to show in console 
+//this method define error to show in console
 void error(const char *msg)
 {
 	perror(msg);
@@ -33,7 +33,7 @@ struct connection_data
 	socklen_t cli_len;
 };
 
-//define connection with client 
+//define connection with client
 void *connectClient(void *args)
 {
 	char buffer[BUFSIZE];
@@ -75,7 +75,7 @@ void *connectClient(void *args)
 
 int main(int argc, char *argv[])
 {
-	//declare values 
+	//declare values
 	int sockfd, portno;
 	struct sockaddr_in serv_addr;
 	vector<pthread_t> threadVector;
@@ -95,13 +95,13 @@ int main(int argc, char *argv[])
 	//sets all values in a buffer to zero
 	bzero((char *)&serv_addr, sizeof(serv_addr));
 
-    // <<portono>> stores the port number on which the server accepts connections
+	// <<portono>> stores the port number on which the server accepts connections
 	portno = atoi(argv[1]);
 
 	//setup (host_addr) to create Bind()
 	serv_addr.sin_family = AF_INET;
 
-	//IP 
+	//IP
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 
 	//!! convert int to network byte to use
