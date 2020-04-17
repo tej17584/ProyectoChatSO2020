@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 	char buffer[BUFSIZE];
 
 	if (argc < 3) {
-	   fprintf(stderr,"usage %s hostname port\n", argv[0]);
+	   fprintf(stderr,"Uso de %s puesto -- hostname \n", argv[0]);
 	   exit(0);
 	}
 
