@@ -7,8 +7,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
-
+#include "mensaje.pb.h" //include de la libreria
 using namespace std;
+using namespace chat;
 
 #define BUFSIZE 1024
 
@@ -20,6 +21,8 @@ void error(const char *msg)
 
 int main(int argc, char *argv[])
 {
+    //Import google Protocol
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
@@ -53,11 +56,56 @@ int main(int argc, char *argv[])
     serv_addr.sin_port = htons(portno);
 
     if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
-        error("ERROR, No se ha podido establecer una conexión con el servidor");
+    {
+        error("ERROR, No se ha podido establecer una conexión con el servidor\n");
+    }
+    else
+    {
+        printf("Espere, el servidor está aprobando su solicitud\n");
+        // Se crea instacia tipo MyInfoSynchronize y se setean los valores deseables
+        MyInfoSynchronize *miInfo(new MyInfoSynchronize);
+        miInfo->set_username("Alejandro Tejada");
+        miInfo->set_ip("127.0.0.1");
 
-    printf("Espere, el servidor está aprobando su solicitud\n");
+        // Se crea instancia de Mensaje, se setea los valores deseados
+        ClientMessage *m(new ClientMessage);
+        m->set_option(1);
+        m->set_allocated_synchronize(miInfo);
+
+        // Se serializa el message a string
+        string binary;
+        m->SerializeToString(&binary);
+
+        //Convertimos a char
+        char cstr[binary.size() + 1];
+        strcpy(cstr, binary.c_str());
+
+        //Enviamos por el socket todo
+        send(sockfd, cstr, strlen(cstr), 0);
+        printf("PASO 1 Ya envie el mensaje por protocolo, esperando a que le llegue....\n");
+    }
+    //Recibir el tercer paso
     recv(sockfd, buffer, BUFSIZE, 0);
-    printf("Se ha establecido la conexión con el servidor de forma exitosa\n\n");
+    ServerMessage *ServerResponse(new ServerMessage);
+    ServerResponse->ParseFromString(buffer);
+    cout << "ID del server: " << ServerResponse->myinforesponse().userid() << endl;
+    int idServer = ServerResponse->myinforesponse().userid(); //id que el servidor asigno al cliente
+    //Construimos el aAcknowledge
+    MyInfoAcknowledge *ack(new MyInfoAcknowledge);
+    ack->set_userid(idServer);
+
+    ClientMessage *m2(new ClientMessage);
+    m2->set_option('6');
+    m2->set_userid(idServer);
+    m2->set_allocated_acknowledge(ack);
+    //lo volvemos string
+    string binary2;
+    m2->SerializeToString(&binary2);
+    //lo volvemos char
+    char cstr2[binary2.size() + 1];
+    strcpy(cstr2, binary2.c_str());
+    send(sockfd, cstr2, strlen(cstr2), 0);
+    printf("PASO 3 Ya le dije al sERVER QUE SI QUIERO SER SU AMIGO\n");
 
     do
     {
@@ -80,5 +128,6 @@ int main(int argc, char *argv[])
 
     printf("CONEXIÓN TERMINADA\n");
     close(sockfd);
+    google::protobuf::ShutdownProtobufLibrary(); //close google protocol
     return 0;
 }
