@@ -44,14 +44,14 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
 
 int main(int argc, char *argv[])
 {
-    printf("Ingrese su nombre de usuario: ")
+    printf("Ingrese su nombre de usuario: ");
     while (getline(cin, usuario)) {
         if (usuario != "") {
             break;
         }
     }
     
-    printf("Ingrese su ip: ")
+    printf("Ingrese su ip: ");
     while (getline(cin, ip)) {
         if (ip != "") {
             break;
