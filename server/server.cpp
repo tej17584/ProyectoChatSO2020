@@ -56,7 +56,7 @@ void CambioStatus(int clientSocket, char *Buffer)
 {
 	ClientMessage *m(new ClientMessage);
 	m->ParseFromString(Buffer);
-	cout << "El nuevo estatus sera : " << m->changestatus().status() << endl;
+	//cout << "El nuevo estatus sera : " << m->changestatus().status() << endl;
 
 	//Cambiamos el estado
 	int i;
@@ -196,8 +196,10 @@ void *connectClient(void *args)
 			{
 				CambioStatus(cli_socket, buffer);
 			}
-
-			//printf("%s", buffer);
+			else
+			{
+				printf("%s", buffer);
+			}
 
 			if (*buffer == '#')
 			{
