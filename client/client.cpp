@@ -13,8 +13,8 @@ using namespace chat;
 
 #define BUFSIZE 1024
 
-string usuario;
-string ip;
+char usuario[20]; //se guarda nombre de usuario
+char ip[20]; //se guarda la ip del usuario
 int IdGlobal; //id global para el user
 void error(const char *msg)
 {
