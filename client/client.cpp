@@ -12,6 +12,7 @@ using namespace std;
 using namespace chat;
 
 #define BUFSIZE 1024
+string entrada;
 
 int IdGlobal; //id global para el user
 void error(const char *msg)
@@ -28,7 +29,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
     CambioStatusRequest->set_status(ClientStatusP);
     // Se crea instancia de Mensaje, se setea los valores deseados
     ClientMessage *message(new ClientMessage);
-    message->set_option('3');
+    message->set_option(3);
     message->set_userid(ClienteIdP);
     message->set_allocated_changestatus(CambioStatusRequest);
     //Se hace binario y string y luego char y se envia
@@ -129,6 +130,8 @@ int main(int argc, char *argv[])
     send(sockfd, cstr2, strlen(cstr2), 0);
     printf("PASO 3 Ya le dije al sERVER QUE SI QUIERO SER SU AMIGO\n");
 
+    char bufOpcion[BUFSIZE];
+
     do
     {
         printf("\n");
@@ -136,9 +139,15 @@ int main(int argc, char *argv[])
         {
             printf("Cliente: ");
             bzero(buffer, BUFSIZE);
-            //CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
-            fgets(buffer, BUFSIZE, stdin);
-            send(sockfd, buffer, BUFSIZE, 0);
+            cin >> entrada;
+            if (entrada == "1")
+            {
+                CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
+            }
+
+            //fgets(buffer, BUFSIZE, stdin);
+            //send(sockfd, buffer, BUFSIZE, 0);
+
             if (*buffer == '#')
             {
                 send(sockfd, buffer, BUFSIZE, 0);

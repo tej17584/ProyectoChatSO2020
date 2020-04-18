@@ -56,7 +56,20 @@ void CambioStatus(int clientSocket, char *Buffer)
 {
 	ClientMessage *m(new ClientMessage);
 	m->ParseFromString(Buffer);
-	cout << "Opcion ya en el metodo de CAmbio estatus.... : " << m->option() << endl;
+	cout << "El nuevo estatus sera : " << m->changestatus().status() << endl;
+
+	//Cambiamos el estado
+	int i;
+	for (i = 0; i < MAX_CLIENTS; i++)
+	{
+		ClienteData Cliente = listadoClientes[i];
+		if (Cliente.ClientID == m->userid())
+		{
+			
+			Cliente.ClientStatus = m->changestatus().status();
+			
+		}
+	}
 }
 
 //define connection with client
@@ -161,15 +174,13 @@ void *connectClient(void *args)
 			//message2->ParseFromString(ret2);
 			messageGeneral->ParseFromString(buffer);
 			cout << "Opcion general enviada.... : " << m->option() << endl;
-			OpcionGeneral = m->option();
+			OpcionGeneral = messageGeneral->option();
 			if (OpcionGeneral == 3)
 			{
 				CambioStatus(cli_socket, buffer);
 			}
-			else
-			{
-				printf("%s", buffer);
-			}
+
+			//printf("%s", buffer);
 
 			if (*buffer == '#')
 			{
