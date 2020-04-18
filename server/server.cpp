@@ -48,7 +48,16 @@ struct connection_data
 	int tid;
 	struct sockaddr_in cli_addr;
 	socklen_t cli_len;
+	int opcionServer;
 };
+
+//OPCION CAMBIO STATU
+void CambioStatus(int clientSocket, char *Buffer)
+{
+	ClientMessage *m(new ClientMessage);
+	m->ParseFromString(Buffer);
+	cout << "Opcion ya en el metodo de CAmbio estatus.... : " << m->option() << endl;
+}
 
 //define connection with client
 void *connectClient(void *args)
@@ -79,13 +88,13 @@ void *connectClient(void *args)
 		m->ParseFromString(buffer);
 
 		// Se puede accesar a los valores de la siguiente manera:
-		cout << "Opcion general enviada.... : " << m->option() << endl;
+		//cout << "Opcion general enviada.... : " << m->option() << endl;
 		//cout << "Username: " << m->synchronize().username() << endl;
 		//cout << "Client IP: " << m->synchronize().ip() << endl;
 
-		int opcionCliente = m->option();
+		int DefaultOpcion = m->option();
 
-		if (opcionCliente == 1) //opcion 1 es que se quiere conectar, entonces mandamos de vuelta
+		if (DefaultOpcion == 1) //opcion 1 es que se quiere conectar, entonces mandamos de vuelta
 		{
 			// Se crea instancia de respuesta para el cliente.
 			MyInfoResponse *response(new MyInfoResponse);
@@ -138,13 +147,30 @@ void *connectClient(void *args)
 				cout << "1. Id o nombre ya existe" << endl;
 				cout << "2. Ya no tenemos capacidad wey" << endl;
 			}
+			bzero(buffer, BUFSIZE);
 		}
 
+		int OpcionGeneral;
 		do
 		{
 			printf("\nCLIENTE: ");
 			recv(cli_socket, buffer, BUFSIZE, 0);
-			printf("%s", buffer);
+
+			//ecibimos el mensaje del cliente
+			ClientMessage *messageGeneral(new ClientMessage);
+			//message2->ParseFromString(ret2);
+			messageGeneral->ParseFromString(buffer);
+			cout << "Opcion general enviada.... : " << m->option() << endl;
+			OpcionGeneral = m->option();
+			if (OpcionGeneral == 3)
+			{
+				CambioStatus(cli_socket, buffer);
+			}
+			else
+			{
+				printf("%s", buffer);
+			}
+
 			if (*buffer == '#')
 			{
 				printf("\nSERVER: El cliente ha abandonado la sala\nF principal\n");

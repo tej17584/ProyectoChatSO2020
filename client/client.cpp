@@ -13,10 +13,31 @@ using namespace chat;
 
 #define BUFSIZE 1024
 
+int IdGlobal; //id global para el user
 void error(const char *msg)
 {
     perror(msg);
     exit(0);
+}
+
+void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *Buffer)
+{
+    //Creamos un changeStatusRequest
+    cout << "Preparando envio de status" << endl;
+    ChangeStatusRequest *CambioStatusRequest(new ChangeStatusRequest);
+    CambioStatusRequest->set_status(ClientStatusP);
+    // Se crea instancia de Mensaje, se setea los valores deseados
+    ClientMessage *message(new ClientMessage);
+    message->set_option('3');
+    message->set_userid(ClienteIdP);
+    message->set_allocated_changestatus(CambioStatusRequest);
+    //Se hace binario y string y luego char y se envia
+    string binary;
+    message->SerializeToString(&binary);
+
+    char cstr[binary.size() + 1];
+    strcpy(cstr, binary.c_str());
+    send(clientSocket, cstr, strlen(cstr), 0);
 }
 
 int main(int argc, char *argv[])
@@ -90,6 +111,7 @@ int main(int argc, char *argv[])
     ServerResponse->ParseFromString(buffer);
     cout << "ID del server: " << ServerResponse->myinforesponse().userid() << endl;
     int idServer = ServerResponse->myinforesponse().userid(); //id que el servidor asigno al cliente
+    IdGlobal = idServer;                                      //igualamos la Idglobal
     //Construimos el aAcknowledge
     MyInfoAcknowledge *ack(new MyInfoAcknowledge);
     ack->set_userid(idServer);
@@ -114,6 +136,7 @@ int main(int argc, char *argv[])
         {
             printf("Cliente: ");
             bzero(buffer, BUFSIZE);
+            //CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
             fgets(buffer, BUFSIZE, stdin);
             send(sockfd, buffer, BUFSIZE, 0);
             if (*buffer == '#')
