@@ -65,11 +65,28 @@ void CambioStatus(int clientSocket, char *Buffer)
 		ClienteData Cliente = listadoClientes[i];
 		if (Cliente.ClientID == m->userid())
 		{
-			
+
 			Cliente.ClientStatus = m->changestatus().status();
-			
 		}
 	}
+
+	//Ahora enviamos la confirmacion
+	//ChangeStatusResponse * status_res(new ChangeStatusResponse);
+	ChangeStatusResponse *SR(new ChangeStatusResponse);
+	SR->set_status(m->changestatus().status());
+	SR->set_userid(m->userid());
+
+	ServerMessage *server_res(new ServerMessage);
+	server_res->set_option(6);
+	server_res->set_allocated_changestatusresponse(SR);
+
+	// Se serializa la respuesta a string
+	string binary;
+	server_res->SerializeToString(&binary);
+
+	char cstr[binary.size() + 1];
+	strcpy(cstr, binary.c_str());
+	send(clientSocket, cstr, strlen(cstr), 0);
 }
 
 //define connection with client

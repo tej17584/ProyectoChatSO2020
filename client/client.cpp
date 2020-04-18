@@ -27,6 +27,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
     cout << "Preparando envio de status" << endl;
     ChangeStatusRequest *CambioStatusRequest(new ChangeStatusRequest);
     CambioStatusRequest->set_status(ClientStatusP);
+    
     // Se crea instancia de Mensaje, se setea los valores deseados
     ClientMessage *message(new ClientMessage);
     message->set_option(3);
