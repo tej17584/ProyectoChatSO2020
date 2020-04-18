@@ -44,12 +44,12 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
 
 int main(int argc, char *argv[])
 {
-    cout << "Ingrese el nombre de usuario: "
+    cout << "Ingrese el nombre de usuario: ";
     while (getline(cin, usuario))
     if (usuario != "")
       break;
     
-    cout << "Ingrese su ip: "
+    cout << "Ingrese su ip: ";
     while (getline(cin, ip))
     if (ip != "")
       break;
