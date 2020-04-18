@@ -56,7 +56,37 @@ void CambioStatus(int clientSocket, char *Buffer)
 {
 	ClientMessage *m(new ClientMessage);
 	m->ParseFromString(Buffer);
-	cout << "Opcion ya en el metodo de CAmbio estatus.... : " << m->option() << endl;
+	//cout << "El nuevo estatus sera : " << m->changestatus().status() << endl;
+
+	//Cambiamos el estado
+	int i;
+	for (i = 0; i < MAX_CLIENTS; i++)
+	{
+		ClienteData Cliente = listadoClientes[i];
+		if (Cliente.ClientID == m->userid())
+		{
+
+			Cliente.ClientStatus = m->changestatus().status();
+		}
+	}
+
+	//Ahora enviamos la confirmacion
+	//ChangeStatusResponse * status_res(new ChangeStatusResponse);
+	ChangeStatusResponse *SR(new ChangeStatusResponse);
+	SR->set_status(m->changestatus().status());
+	SR->set_userid(m->userid());
+
+	ServerMessage *server_res(new ServerMessage);
+	server_res->set_option(6);
+	server_res->set_allocated_changestatusresponse(SR);
+
+	// Se serializa la respuesta a string
+	string binary;
+	server_res->SerializeToString(&binary);
+
+	char cstr[binary.size() + 1];
+	strcpy(cstr, binary.c_str());
+	send(clientSocket, cstr, strlen(cstr), 0);
 }
 
 //define connection with client
@@ -161,7 +191,7 @@ void *connectClient(void *args)
 			//message2->ParseFromString(ret2);
 			messageGeneral->ParseFromString(buffer);
 			cout << "Opcion general enviada.... : " << m->option() << endl;
-			OpcionGeneral = m->option();
+			OpcionGeneral = messageGeneral->option();
 			if (OpcionGeneral == 3)
 			{
 				CambioStatus(cli_socket, buffer);
