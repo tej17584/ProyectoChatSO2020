@@ -44,15 +44,15 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
 
 int main(int argc, char *argv[])
 {
-    printf("Ingrese su nombre de usuario: ");
+    cout << "Ingrese el nombre de usuario: "
     while (getline(cin, usuario))
-        if (usuario != "")
-            break;
+    if (usuario != "")
+      break;
     
-    printf("Ingrese su ip: ");
+    cout << "Ingrese su ip: "
     while (getline(cin, ip))
-        if (ip != "")
-            break;
+    if (ip != "")
+      break;
     
     //Import google Protocol
     GOOGLE_PROTOBUF_VERIFY_VERSION;
