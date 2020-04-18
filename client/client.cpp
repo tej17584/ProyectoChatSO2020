@@ -13,6 +13,8 @@ using namespace chat;
 
 #define BUFSIZE 1024
 
+string usuario;
+string ip;
 int IdGlobal; //id global para el user
 void error(const char *msg)
 {
@@ -42,6 +44,20 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
 
 int main(int argc, char *argv[])
 {
+    printf("Ingrese su nombre de usuario: ")
+    while (getline(cin, usuario)) {
+        if (usuario != "") {
+            break;
+        }
+    }
+    
+    printf("Ingrese su ip: ")
+    while (getline(cin, ip)) {
+        if (ip != "") {
+            break;
+        }
+    }
+    
     //Import google Protocol
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     int sockfd, portno, n;
@@ -85,8 +101,8 @@ int main(int argc, char *argv[])
         printf("Espere, el servidor está aprobando su solicitud\n");
         // Se crea instacia tipo MyInfoSynchronize y se setean los valores deseables
         MyInfoSynchronize *miInfo(new MyInfoSynchronize);
-        miInfo->set_username("Alejandro Tejada");
-        miInfo->set_ip("127.0.0.1");
+        miInfo->set_username(usuario);
+        miInfo->set_ip(ip);
 
         // Se crea instancia de Mensaje, se setea los valores deseados
         ClientMessage *m(new ClientMessage);
