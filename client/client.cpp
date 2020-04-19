@@ -228,7 +228,6 @@ void menu()
                     }else{
                         cout << "Ingrese un opcion valida\n";
                     }
-                    break;
                 }
 
         //Listado de usuarios
