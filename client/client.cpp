@@ -14,11 +14,9 @@ using namespace chat;
 #define BUFSIZE 1024
 int entrada;
 
+//Cambio status menu
 //variable para ver la opcion que se desea realizar
-int var;
-//variable donde se guarda el estado
-string input3;
-
+int entradaStatus;
 
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
@@ -82,17 +80,6 @@ void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char 
     send(sockfd, cstr, strlen(cstr), 0);
     cout << "Peticion de usuario especifico enviada..." << endl;
 }
-
-//metodo para hacer cambio de estatus
-void cambioEstatus() {
-    //variable para ver la opcion que se desea realizar
-    int var;
-    //variable donde se guarda el estado
-    string input3;
-    
-    //menu de cambio de estado
-    
-    }
 
 int main(int argc, char *argv[])
 {
@@ -214,153 +201,88 @@ int main(int argc, char *argv[])
             cout << "6. Salir \n";
             cout << "\n";
             
-            do{
-                cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
-                bzero(buffer, BUFSIZE);
-                cin >> entrada;
-                cout <<  "\n";
-            }
+            cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
+            bzero(buffer, BUFSIZE);
+            cin >> entrada;
+            cout <<  "\n";
             
             while ( entrada < 1 || entrada > 6 );
-                
-                switch (entrada)
-                {
-                    //Mensaje directo
-//                    case 1:
-//                        cout << "MENSAJE DIRECTO\n";
-//                        cout << "Ingrese el nombre de usuario\n";
-//                        cin.sync();
-//                        cin >> input11;
-//                        cout << "\n";
-//
-//                        cout << "Ingrese el mensaje que desea enviar\n";
-//                        while (getline(cin, input12))
-//                        if (input12 != "")
-//                          break;
-//                        cout << "\n";
-//
-//                        cout << "Usuario:\n";
-//                        cout << input11;
-//                        cout << "\n";
-//                        cout << "Mensaje:\n";
-//                        cout << input12;
-//                        cout << "\n";
-//                        break;
-                     
-                    //Broadcast
-//                    case 2:
-//                        cout << "-------------------\n";
-//                        cout << "BROADCAST\n";
-//                        cout << "-------------------\n";
-//                        cout << "\n";
-//
-//                        cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
-//                        while (getline(cin, opcion1))
-//                        if (opcion1 != "")
-//                          break;
-//                        cout <<  "\n";
-//                        cout << "mensaje: " << opcion1;
-//                        cout <<  "\n";
-//
-//                        if (opcion1 == "0") {
-//                            break;
-//                        }
-//                        else{
-//                            while (opcion1 != "0") {
-//                                cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
-//                                while (getline(cin, opcion1))
-//                                if (opcion1 != "")
-//                                  break;
-//                                cout <<  "\n";
-//                                cout << "mensaje: " << opcion1;
-//                                cout <<  "\n";
-//                            }
-//                        }
-//                        break;
+            
+            
+            switch (opcion)
+            {
+                //Mensaje directo
+                case 1:
+                    break;
                     
-                    //Cambio de estatus
-                    case 3:
-                        do
-                        {
-                            cout << "Cambio de estatus\n";
-                            cout << "Ingrese el numero de la opcion que desea:\n";
-                            cout << "1. Activo\n" ;
-                            cout << "2. Ocupado\n" ;
-                            cout << "3. Inactivo\n" ;
-                            cout << "4. Salir\n" ;
-                            cout << "\n" ;
+                //Broadcast
+                case 2:
+                    break;
+                    
+                //Cambio de status
+                case 3:
+                    do
+                    {
+                        cout << "Cambio de estatus\n";
+                        cout << "Ingrese el numero de la opcion que desea:\n";
+                        cout << "1. Activo\n" ;
+                        cout << "2. Ocupado\n" ;
+                        cout << "3. Inactivo\n" ;
+                        cout << "4. Salir\n" ;
+                        cout << "\n" ;
+                        
+                        do{
+                            cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
+                            cin >> entradaStatus;
+                            cout <<  "\n";
+                        }
+                        
+                        while ( entradaStatus < 1 || entradaStatus > 4 );
                             
-                            do{
-                                cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
-                                cin >> var;
-                                cout <<  "\n";
-                            }
-                            
-                            while ( var < 1 || var > 4 );
+                            switch (entradaStatus)
+                            {
+                                //Activo
+                                case 1:
+                                    cout << "Cambio a estatus Activo\n" ;
+                                    CambioStatus(IdGlobal, "Activo", sockfd, buffer);
+                                    entradaStatus = 4;
+                                    break;
+                                 
+                                //Ocupado
+                                case 2:
+                                    cout << "Cambio a estatus Ocupado\n" ;
+                                    CambioStatus(IdGlobal, "Ocupado", sockfd, buffer);
+                                    entradaStatus = 4;
+                                    break;
                                 
-                                switch (var)
-                                {
-                                    //Activo
-                                    case 1:
-                                        cout << "Cambio a estatus Activo\n" ;
-                                        CambioStatus(IdGlobal, "Activo", sockfd, buffer);
-                                        var = 4;
-                                        break;
-                                     
-                                    //Ocupado
-                                    case 2:
-                                        cout << "Cambio a estatus Ocupado\n" ;
-                                        CambioStatus(IdGlobal, "Ocupado", sockfd, buffer);
-                                        var = 4;
-                                        break;
-                                    
-                                    //Inactivo
-                                    case 3:
-                                        cout << "Cambio a estatus Inactivo\n" ;
-                                        CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
-                                        var = 4;
-                                        break;
-                                }
-                            } while ( var != 4 );
-                        break;
-                       
-                    //Listado de usuarios
-//                    case 4:
-//                        cout << "Listado de usuarios registrados\n";
-//                        break;
-                      
-                    //Informacion de usuario
-//                    case 5:
-//                        cout << "Informacion de usuario\n";
-//                        cout << "Ingrese nombre de usuario\n";
-//
-//                        cin >>  input5;
-//                        cout << "\n";
-//                        cout << input5;
-//                        break;
-                }
-            } while ( entrada != 6 );
-        }
-//        do
-//        {
-//            printf("Cliente: ");
-//            bzero(buffer, BUFSIZE);
-//            cin >> entrada;
-//            if (entrada == "1")
-//            {
-//                CambioStatus(IdGlobal, "Haragan", sockfd, buffer);
-//            }
-//
-//            //fgets(buffer, BUFSIZE, stdin);
-//            //send(sockfd, buffer, BUFSIZE, 0);
-//
-//            if (*buffer == '#')
-//            {
-//                send(sockfd, buffer, BUFSIZE, 0);
-//                salir = true;
-//            }
-//
-//        } while (*buffer != '#');
+                                //Inactivo
+                                case 3:
+                                    cout << "Cambio a estatus Inactivo\n" ;
+                                    CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
+                                    entradaStatus = 4;
+                                    break;
+                            }
+                        } while ( var != 4 );
+                    
+                //Listado de usuarios
+                case 4:
+                    break;
+                    
+                //Informacion de usuario
+                case 5:
+                    break;
+            }
+
+            //fgets(buffer, BUFSIZE, stdin);
+            //send(sockfd, buffer, BUFSIZE, 0);
+
+            if (*buffer == '#')
+            {
+                send(sockfd, buffer, BUFSIZE, 0);
+                salir = true;
+            }
+
+        } while (*buffer != '#');
 
     } while (!salir);
 
