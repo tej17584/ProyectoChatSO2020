@@ -1189,12 +1189,26 @@ class BroadcastMessage : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::int32 userid() const;
   void set_userid(::google::protobuf::int32 value);
 
+  // optional string username = 3;
+  bool has_username() const;
+  void clear_username();
+  static const int kUsernameFieldNumber = 3;
+  const ::std::string& username() const;
+  void set_username(const ::std::string& value);
+  void set_username(const char* value);
+  void set_username(const char* value, size_t size);
+  ::std::string* mutable_username();
+  ::std::string* release_username();
+  void set_allocated_username(::std::string* username);
+
   // @@protoc_insertion_point(class_scope:chat.BroadcastMessage)
  private:
   inline void set_has_message();
   inline void clear_has_message();
   inline void set_has_userid();
   inline void clear_has_userid();
+  inline void set_has_username();
+  inline void clear_has_username();
 
   // helper for ByteSize()
   int RequiredFieldsByteSizeFallback() const;
@@ -1203,6 +1217,7 @@ class BroadcastMessage : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr message_;
+  ::google::protobuf::internal::ArenaStringPtr username_;
   ::google::protobuf::int32 userid_;
   friend void  protobuf_AddDesc_mensaje_2eproto();
   friend void protobuf_AssignDesc_mensaje_2eproto();
@@ -1521,12 +1536,26 @@ class DirectMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::int32 userid() const;
   void set_userid(::google::protobuf::int32 value);
 
+  // optional string username = 3;
+  bool has_username() const;
+  void clear_username();
+  static const int kUsernameFieldNumber = 3;
+  const ::std::string& username() const;
+  void set_username(const ::std::string& value);
+  void set_username(const char* value);
+  void set_username(const char* value, size_t size);
+  ::std::string* mutable_username();
+  ::std::string* release_username();
+  void set_allocated_username(::std::string* username);
+
   // @@protoc_insertion_point(class_scope:chat.DirectMessage)
  private:
   inline void set_has_message();
   inline void clear_has_message();
   inline void set_has_userid();
   inline void clear_has_userid();
+  inline void set_has_username();
+  inline void clear_has_username();
 
   // helper for ByteSize()
   int RequiredFieldsByteSizeFallback() const;
@@ -1535,6 +1564,7 @@ class DirectMessage : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr message_;
+  ::google::protobuf::internal::ArenaStringPtr username_;
   ::google::protobuf::int32 userid_;
   friend void  protobuf_AddDesc_mensaje_2eproto();
   friend void protobuf_AssignDesc_mensaje_2eproto();
@@ -2821,6 +2851,60 @@ inline void BroadcastMessage::set_userid(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:chat.BroadcastMessage.userId)
 }
 
+// optional string username = 3;
+inline bool BroadcastMessage::has_username() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void BroadcastMessage::set_has_username() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void BroadcastMessage::clear_has_username() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void BroadcastMessage::clear_username() {
+  username_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_username();
+}
+inline const ::std::string& BroadcastMessage::username() const {
+  // @@protoc_insertion_point(field_get:chat.BroadcastMessage.username)
+  return username_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void BroadcastMessage::set_username(const ::std::string& value) {
+  set_has_username();
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:chat.BroadcastMessage.username)
+}
+inline void BroadcastMessage::set_username(const char* value) {
+  set_has_username();
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:chat.BroadcastMessage.username)
+}
+inline void BroadcastMessage::set_username(const char* value, size_t size) {
+  set_has_username();
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:chat.BroadcastMessage.username)
+}
+inline ::std::string* BroadcastMessage::mutable_username() {
+  set_has_username();
+  // @@protoc_insertion_point(field_mutable:chat.BroadcastMessage.username)
+  return username_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* BroadcastMessage::release_username() {
+  // @@protoc_insertion_point(field_release:chat.BroadcastMessage.username)
+  clear_has_username();
+  return username_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void BroadcastMessage::set_allocated_username(::std::string* username) {
+  if (username != NULL) {
+    set_has_username();
+  } else {
+    clear_has_username();
+  }
+  username_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), username);
+  // @@protoc_insertion_point(field_set_allocated:chat.BroadcastMessage.username)
+}
+
 // -------------------------------------------------------------------
 
 // DirectMessageRequest
@@ -3095,6 +3179,60 @@ inline void DirectMessage::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
   // @@protoc_insertion_point(field_set:chat.DirectMessage.userId)
+}
+
+// optional string username = 3;
+inline bool DirectMessage::has_username() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void DirectMessage::set_has_username() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void DirectMessage::clear_has_username() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void DirectMessage::clear_username() {
+  username_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_username();
+}
+inline const ::std::string& DirectMessage::username() const {
+  // @@protoc_insertion_point(field_get:chat.DirectMessage.username)
+  return username_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void DirectMessage::set_username(const ::std::string& value) {
+  set_has_username();
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:chat.DirectMessage.username)
+}
+inline void DirectMessage::set_username(const char* value) {
+  set_has_username();
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:chat.DirectMessage.username)
+}
+inline void DirectMessage::set_username(const char* value, size_t size) {
+  set_has_username();
+  username_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:chat.DirectMessage.username)
+}
+inline ::std::string* DirectMessage::mutable_username() {
+  set_has_username();
+  // @@protoc_insertion_point(field_mutable:chat.DirectMessage.username)
+  return username_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* DirectMessage::release_username() {
+  // @@protoc_insertion_point(field_release:chat.DirectMessage.username)
+  clear_has_username();
+  return username_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void DirectMessage::set_allocated_username(::std::string* username) {
+  if (username != NULL) {
+    set_has_username();
+  } else {
+    clear_has_username();
+  }
+  username_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), username);
+  // @@protoc_insertion_point(field_set_allocated:chat.DirectMessage.username)
 }
 
 // -------------------------------------------------------------------
