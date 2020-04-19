@@ -202,13 +202,13 @@ void menu()
                         entradaStatus = 4;
                         break;
                     }
-                    else if{
+                    else if (entradaStatus == 2){
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         entradaStatus = 4;
                         break;
                     }
-                    else if{
+                    else if (entradaStatus == 3){
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         entradaStatus = 4;
