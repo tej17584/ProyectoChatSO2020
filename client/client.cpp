@@ -14,6 +14,11 @@ using namespace chat;
 #define BUFSIZE 1024
 string entrada;
 
+//variable para ver la opcion que se desea realizar
+int var;
+//variable donde se guarda el estado
+string input3;
+
 
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
@@ -86,49 +91,8 @@ void cambioEstatus() {
     string input3;
     
     //menu de cambio de estado
-    do
-    {
-        cout << "Cambio de estatus\n";
-        cout << "Ingrese el numero de la opcion que desea:\n";
-        cout << "1. Activo\n" ;
-        cout << "2. Ocupado\n" ;
-        cout << "3. Inactivo\n" ;
-        cout << "4. Salir\n" ;
-        cout << "\n" ;
-        
-        do{
-            cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
-            cin >> var;
-            cout <<  "\n";
-        }
-        
-        while ( var < 1 || var > 4 );
-            
-            switch (var)
-            {
-                //Activo
-                case 1:
-                    cout << "Cambio a estatus Activo\n" ;
-                    CambioStatus(IdGlobal, "Activo", sockfd, buffer);
-                    var = 4;
-                    break;
-                 
-                //Ocupado
-                case 2:
-                    cout << "Cambio a estatus Ocupado\n" ;
-                    CambioStatus(IdGlobal, "Ocupado", sockfd, buffer);
-                    var = 4;
-                    break;
-                
-                //Inactivo
-                case 3:
-                    cout << "Cambio a estatus Inactivo\n" ;
-                    CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
-                    var = 4;
-                    break;
-            }
-        } while ( var != 4 );
-}
+    
+    }
 
 int main(int argc, char *argv[])
 {
@@ -316,7 +280,48 @@ int main(int argc, char *argv[])
                     
                     //Cambio de estatus
                     case 3:
-                        cambioEstatus();
+                        do
+                        {
+                            cout << "Cambio de estatus\n";
+                            cout << "Ingrese el numero de la opcion que desea:\n";
+                            cout << "1. Activo\n" ;
+                            cout << "2. Ocupado\n" ;
+                            cout << "3. Inactivo\n" ;
+                            cout << "4. Salir\n" ;
+                            cout << "\n" ;
+                            
+                            do{
+                                cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
+                                cin >> var;
+                                cout <<  "\n";
+                            }
+                            
+                            while ( var < 1 || var > 4 );
+                                
+                                switch (var)
+                                {
+                                    //Activo
+                                    case 1:
+                                        cout << "Cambio a estatus Activo\n" ;
+                                        CambioStatus(IdGlobal, "Activo", sockfd, buffer);
+                                        var = 4;
+                                        break;
+                                     
+                                    //Ocupado
+                                    case 2:
+                                        cout << "Cambio a estatus Ocupado\n" ;
+                                        CambioStatus(IdGlobal, "Ocupado", sockfd, buffer);
+                                        var = 4;
+                                        break;
+                                    
+                                    //Inactivo
+                                    case 3:
+                                        cout << "Cambio a estatus Inactivo\n" ;
+                                        CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
+                                        var = 4;
+                                        break;
+                                }
+                            } while ( var != 4 );
                         break;
                        
                     //Listado de usuarios
