@@ -208,8 +208,12 @@ void menu()
             cin >> entryStatus;
             cout << "\n";
             
-            while (entryStatus < 0 || entryStatus > 3)
+            while (entryStatus != 0)
             {
+                if (entryStatus == 0)
+                {
+                    break;
+                }
                 if (entryStatus == 1)
                 {
                     status = "Activo";
