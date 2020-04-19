@@ -30,61 +30,6 @@ void error(const char *msg)
     exit(0);
 }
 
-void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer)
-{
-    //Creamos un changeStatusRequest
-    cout << "Preparando peticion de cambio de status" << endl;
-    ChangeStatusRequest *CambioStatusRequest(new ChangeStatusRequest);
-    CambioStatusRequest->set_status(ClientStatusP);
-
-    // Se crea instancia de Mensaje, se setea los valores deseados
-    ClientMessage *message(new ClientMessage);
-    message->set_option(3);
-    message->set_userid(ClienteIdP);
-    message->set_allocated_changestatus(CambioStatusRequest);
-    //Se hace binario y string y luego char y se envia
-    string binary;
-    message->SerializeToString(&binary);
-
-    char cstr[binary.size() + 1];
-    strcpy(cstr, binary.c_str());
-    send(sockfd, cstr, strlen(cstr), 0);
-    cout << "Su Peticion de cambio de Status fue enviada, esperando respuesta..." << endl;
-    //ahora esperamos la response
-    recv(sockfd, Buffer, BUFSIZE, 0);
-    //string ret(buffer, PORT);
-
-    ServerMessage *ServerResponse(new ServerMessage);
-    //s_message->ParseFromString(ret);
-    ServerResponse->ParseFromString(Buffer);
-
-    cout << "Su estatus se ha actualizado a: " << ServerResponse->changestatusresponse().status() << endl;
-    menu();
-}
-
-void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char *Buffer)
-{
-    //Creamos un changeStatusRequest
-    cout << "Preparando peticion de Pedido de Usuario especifico...." << endl;
-    connectedUserRequest *PeticionUsuarioConectado(new connectedUserRequest);
-    PeticionUsuarioConectado->set_username(ClientUserName);
-    PeticionUsuarioConectado->set_userid(ClienteIdP);
-
-    // Se crea instancia de Mensaje, se setea los valores deseados
-    ClientMessage *message(new ClientMessage);
-    message->set_option(2);
-    message->set_userid(ClienteIdP);
-    message->set_allocated_connectedusers(PeticionUsuarioConectado);
-    //Se hace binario y string y luego char y se envia
-    string binary;
-    message->SerializeToString(&binary);
-
-    char cstr[binary.size() + 1];
-    strcpy(cstr, binary.c_str());
-    send(sockfd, cstr, strlen(cstr), 0);
-    cout << "Peticion de usuario especifico enviada..." << endl;
-}
-
 void menu(){
     cout << "\n";
     cout << "---------------------------------------------------\n";
@@ -169,6 +114,7 @@ void menu(){
                             break;
                     }
                 } while ( entradaStatus != 4 );
+            break;
             
         //Listado de usuarios
         case 4:
@@ -178,6 +124,62 @@ void menu(){
         case 5:
             break;
     } while ( entrada != 6 );
+    break;
+}
+
+void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer)
+{
+    //Creamos un changeStatusRequest
+    cout << "Preparando peticion de cambio de status" << endl;
+    ChangeStatusRequest *CambioStatusRequest(new ChangeStatusRequest);
+    CambioStatusRequest->set_status(ClientStatusP);
+
+    // Se crea instancia de Mensaje, se setea los valores deseados
+    ClientMessage *message(new ClientMessage);
+    message->set_option(3);
+    message->set_userid(ClienteIdP);
+    message->set_allocated_changestatus(CambioStatusRequest);
+    //Se hace binario y string y luego char y se envia
+    string binary;
+    message->SerializeToString(&binary);
+
+    char cstr[binary.size() + 1];
+    strcpy(cstr, binary.c_str());
+    send(sockfd, cstr, strlen(cstr), 0);
+    cout << "Su Peticion de cambio de Status fue enviada, esperando respuesta..." << endl;
+    //ahora esperamos la response
+    recv(sockfd, Buffer, BUFSIZE, 0);
+    //string ret(buffer, PORT);
+
+    ServerMessage *ServerResponse(new ServerMessage);
+    //s_message->ParseFromString(ret);
+    ServerResponse->ParseFromString(Buffer);
+
+    cout << "Su estatus se ha actualizado a: " << ServerResponse->changestatusresponse().status() << endl;
+    menu();
+}
+
+void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char *Buffer)
+{
+    //Creamos un changeStatusRequest
+    cout << "Preparando peticion de Pedido de Usuario especifico...." << endl;
+    connectedUserRequest *PeticionUsuarioConectado(new connectedUserRequest);
+    PeticionUsuarioConectado->set_username(ClientUserName);
+    PeticionUsuarioConectado->set_userid(ClienteIdP);
+
+    // Se crea instancia de Mensaje, se setea los valores deseados
+    ClientMessage *message(new ClientMessage);
+    message->set_option(2);
+    message->set_userid(ClienteIdP);
+    message->set_allocated_connectedusers(PeticionUsuarioConectado);
+    //Se hace binario y string y luego char y se envia
+    string binary;
+    message->SerializeToString(&binary);
+
+    char cstr[binary.size() + 1];
+    strcpy(cstr, binary.c_str());
+    send(sockfd, cstr, strlen(cstr), 0);
+    cout << "Peticion de usuario especifico enviada..." << endl;
 }
 
 int main(int argc, char *argv[])
