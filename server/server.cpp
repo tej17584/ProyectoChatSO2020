@@ -118,37 +118,75 @@ void enviadoPorSocket (string mensaje, int socket){
 	send(socket, buffer, mensaje.size() + 1, 0);
 }
 
-void obtenerUsuario (int id){
+ClienteData obtenerUsuario (int id){
 	ClienteData usuarioTemporal = listadoClientes[0]; 
 	int count = 0; 
 	while (usuarioTemporal.ClientID != id) {
 		cont ++; 
+		usuarioTemporal = listadoClientes[count]
+	}
+	return usuarioTemporal; 
+}
+
+ClienteData obtenerIdUsername(string ClientUserName){
+	ClienteData usuarioTemporal = listadoClientes[0]; 
+	int count = 0; 
+	for (int i=0; i < listadoClientes.size(); i++){
+		if (ClientUserName.compare(listadoClientes[i].ClientUserName) == 0){
+			usuarioTemporal = listadoClientes[count]; 
+		}
 	}
 	return usuarioTemporal; 
 }
 
 void enviarBroadCast(int id, string message, int socket){
 	BroadcastResponse * response( new BroadcastResponse); 
-	response->set_messagestatus("SEND"); 
+	response->set_messagestatus("Send"); 
 	ServerMessage * m(new ServerMessage); 
 	m->set_option(7); 
 	m->set_allocated_broadcastresponse(response); 
 	string binary; 
 	m->SerializeToString(&binary); 
 	enviadoPorSocket(binary, socket); 
-
+	//server se encarga de responder a todos
 	BroadcastResponse * globalResponse( new BroadcastMessage); 
 	globalResponse->set_message(message); 
 	globalResponse->set_userid(id); 
-	ServerMessage * gM( new ServerMessage ); 
-	gM->set_option(1); 
-	gM->set_allocated_broadcast(globalResponse); 
+	ServerMessage * globalMessage( new ServerMessage ); 
+	globalMessage->set_option(1); 
+	globalMessage->set_allocated_broadcast(globalResponse); 
 	binary; 
-	gM->SerializeToString(&binary); 
+	globalMessage->SerializeToString(&binary); 
 	for (int i = 0; i < listadoClientes.size(); i++){
-		ClienteData clienteTemporal = getUser(i); 
+		ClienteData clienteTemporal = obtenerUsuario(i); 
+		printf("%d\n", clienteTemporal.ClientID);
 		enviadoPorSocket(binary, clienteTemporal.socket)
 	}
+}
+
+void enviarMensaje(string username, string message, int socket) {
+	DirectMessageResponse * response(new DirectMessageResponse); 
+	response->set_messagestatus("Send"); 
+	ServerMessage * m(new ServerMessage); 
+	m->set_option(8); 
+	m->set_allocated_directmessageresponse(response); 
+	string binary; 
+	m->SerializeToString(&binary); 
+	enviadoPorSocket(binaty,socket); 
+	// server responde a una persona en específico 
+	DirectMessageResponse * directMessage(new DirectMessage); 
+	directMessage->set_mesagge(message); 
+	//directMessage->set_userid(0) //se tiene que actualizar el protocolo 
+	ServerMessage * pm (new ServerMessage); 
+	pm-> set_option(2); 
+	pm->set_allocated_message(directMessage); 
+	binary = ""; 
+	pm->SerializeToString(&binary); 
+
+	//printf("Mnesjae directo: %s/n", username); 
+	user clienteTemporal = obtenerIdUsername(username); 
+	printf("Mensaje Directo: %d/n", clienteTemporal.userId); 
+	enviadoPorSocket(binary, clienteTemporal.socket); 
 }
 
 //OPCION CAMBIO STATU
