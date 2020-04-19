@@ -21,7 +21,9 @@ using namespace chat;
 // ------------------------------------------------S T A R T -----------------------------------------//
 #define MAX_CLIENTS 35 // number of students in class (assuming each one will be a client)
 #define BUFSIZE 1024
+#define PORT 8080 
 int portno2;
+char Buffer[BUFSIZE]; 
 
 class ClienteData
 {
@@ -51,7 +53,7 @@ struct connection_data
 	int opcionServer;
 };
 
-//OPCION CAMBIO STATU
+//OPCION CAMBIO STATUS
 void CambioStatus(int clientSocket, char *Buffer)
 {
 	ClientMessage *m(new ClientMessage);
@@ -88,6 +90,27 @@ void CambioStatus(int clientSocket, char *Buffer)
 	strcpy(cstr, binary.c_str());
 	send(clientSocket, cstr, strlen(cstr), 0);
 }
+
+void salirCliente(int clientSocket, char *Buffer) {
+	read( clientSocket, Buffer, PORT ); 
+	ClientMessage* message(new ClientMessage); 
+
+	message->ParseFromString(Buffer); 
+	cout << "El Cliente ID:" message->exitchat().userid() << "desea abandonar la sesión" << endl; 
+	int i; 
+	for (i = 0; i < MAX_CLIENTS; i++){
+		ClienteData c  = listadoClientes[i]; 
+		if (c.ClientID == message-->exitchat().userid()){
+			ClienteData emptyClient; 
+			listadoClientes[i] = emptyClient; 
+		}
+
+	}
+
+	cout << "El cliente con ID: " << message-> exitchat().userid() << "ha abandonado la sesión actual" << endl; 
+
+}
+
 
 //define connection with client
 void *connectClient(void *args)
