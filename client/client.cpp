@@ -13,7 +13,7 @@ using namespace chat;
 
 #define BUFSIZE 1024
 int entrada;
-int sockfd
+int sockfd;
 
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
