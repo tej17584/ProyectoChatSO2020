@@ -95,20 +95,60 @@ void salirCliente(int clientSocket, char *Buffer) {
 	read( clientSocket, Buffer, PORT ); 
 	ClientMessage* message(new ClientMessage); 
 
-	message->ParseFromString(Buffer); 
-	cout << "El Cliente ID:" message->exitchat().userid() << "desea abandonar la sesión" << endl; 
+	m->ParseFromString(Buffer); 
+	cout << "El Cliente ID:" m->exitchat().userid() << "desea abandonar la sesión" << endl; 
 	int i; 
 	for (i = 0; i < MAX_CLIENTS; i++){
-		ClienteData c  = listadoClientes[i]; 
-		if (c.ClientID == message-->exitchat().userid()){
+		ClienteData clienteTemporal  = listadoClientes[i]; 
+		if (clienteTemporal.ClientID == m->exitchat().userid()){
 			ClienteData emptyClient; 
 			listadoClientes[i] = emptyClient; 
 		}
 
 	}
 
-	cout << "El cliente con ID: " << message-> exitchat().userid() << "ha abandonado la sesión actual" << endl; 
+	cout << "El cliente con ID: " << m-> exitchat().userid() << "ha abandonado la sesión actual" << endl; 
 
+}
+
+void enviadoPorSocket (string mensaje, int socket){ 
+	char buffer[1024] = {0}; 
+	strcpy(buffer, mensaje.c_str());
+
+	send(socket, buffer, mensaje.size() + 1, 0);
+}
+
+void obtenerUsuario (int id){
+	ClienteData usuarioTemporal = listadoClientes[0]; 
+	int count = 0; 
+	while (usuarioTemporal.ClientID != id) {
+		cont ++; 
+	}
+	return usuarioTemporal; 
+}
+
+void enviarBroadCast(int id, string message, int socket){
+	BroadcastResponse * response( New BroadcastResponse); 
+	response->set_messagestatus("SEND"); 
+	ServerMessage * m(new ServerMessage); 
+	m->set_option(7); 
+	m->set_allocated_broadcastresponse(response); 
+	string binary; 
+	m->SerializeToString(&binary); 
+	enviadoPorSocket(binary, socket); 
+
+	BroadcastResponse * globalResponse( new BroadcastMessage); 
+	globalResponse->set_message(message); 
+	globalResponse->set_userid(id); 
+	ServerMessage * gM( new ServerMessage ); 
+	gM->set_option(1); 
+	gM->set_allocated_broadcast(globalResponse); 
+	binary; 
+	gM->SerializeToString(&binary); 
+	for (int i = 0; i < listadoClientes.size(); i++){
+		ClienteData clienteTemporal = getUser(i); 
+		enviadoPorSocket(binary, clienteTemporal.socket)
+	}
 }
 
 
