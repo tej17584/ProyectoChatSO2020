@@ -210,7 +210,7 @@ void menu()
                 cin >> entryStatus;
                 cout << "\n";
                 
-                while (entryStatus != 0)
+                while (entryStatus < 0 || entryStatus > 3)
                 {
                     if (entryStatus == 1)
                     {
@@ -233,10 +233,11 @@ void menu()
                     else
                     {
                         cout << "Ingrese un opcion valida\n";
-                         break;
-                    }while (entryStatus != 0);
+                        break;
+                    }
                 }
-            }
+            }while (entryStatus != 0);
+            break;
 
         //Listado de usuarios
         case 4:
