@@ -144,7 +144,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 
 void menu()
 {
-    if (incio == true) {
+    if (inicio == true) {
         cout << "\n";
         cout << "---------------------------------------------------\n";
         cout << "Bienvenido a Chat SISTOS " << usuario << "\n";
@@ -162,7 +162,6 @@ void menu()
     
     else if (inicio == false) {
         cout << "---------------------------------------------------\n";
-        cout << "\n";
         cout << "STATUS ACTUAL: " << status << "\n";
         cout << "\n";
         cout << "Ingrese el numero de la opcion que deasea ejecutar:\n";
@@ -176,11 +175,12 @@ void menu()
         cout << "\n";
     }
     
-    incio = false;
+    inicio = false;
 
     cout << "Introduzca la opcion que desea ejecutar (1-6): \n";
     bzero(buffer, BUFSIZE);
     cin >> entrada;
+    cout << "---------------------------------------------------\n";
     cout << "\n";
 
     while (entrada < 1 || entrada > 6);
@@ -214,19 +214,19 @@ void menu()
                     if (entradaStatus == 1) {
                         status = "Activo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        entradaStatus = 4;
+                        //entradaStatus = 4;
                         break;
                     }
                     else if (entradaStatus == 2){
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        entradaStatus = 4;
+                        //entradaStatus = 4;
                         break;
                     }
                     else if (entradaStatus == 3){
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        entradaStatus = 4;
+                        //entradaStatus = 4;
                         break;
                     }else{
                         cout << "Ingrese un opcion valida\n";
