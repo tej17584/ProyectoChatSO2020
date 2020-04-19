@@ -17,7 +17,7 @@ int entrada;
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
 int entradaStatus;
-string status;
+string status = "Activo";
 
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
             
             
             cout << "---------------------------------------------------\n";
-            cout << "Status Actual:" << status;
+            cout << "Status Actual:" << status << endl;
             cout << "---------------------------------------------------\n";
             
             cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
