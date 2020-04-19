@@ -17,7 +17,7 @@ int entrada;
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
 int entradaStatus;
-string status
+string status;
 
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     if (argc < 3)
     {
         fprintf(stderr, "Uso de %s puesto -- hostname \n", argv[0]);
-        exit(0);ƒ
+        exit(0);
     }
 
     portno = atoi(argv[2]);
