@@ -252,7 +252,6 @@ void menu()
         //salir
         case 6:
             break;
-        }
         while (entrada != 6);
     }
 }
