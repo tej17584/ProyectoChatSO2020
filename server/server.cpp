@@ -163,30 +163,55 @@ void enviarBroadCast(int id, string message, int socket){
 		enviadoPorSocket(binary, clienteTemporal.socket)
 	}
 }
+void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
+	count << "Mensaje directo" << endl; 
+	read (connectfd, Buffer, portno2); 
 
-void enviarMensaje(string username, string message, int socket) {
-	DirectMessageResponse * response(new DirectMessageResponse); 
-	response->set_messagestatus("Send"); 
-	ServerMessage * m(new ServerMessage); 
-	m->set_option(8); 
-	m->set_allocated_directmessageresponse(response); 
+	ClientMessage * message (new ClienteData); 
+	message->ParseFromString(Buffer); 
+
+	cout << "Cliente Message: " << message->directmessage().message() << endl; 
+	cout << "El identificador del cliente que desea enviar el mensaje:" << message->userid() << endl; 
+	
+	int i = 0; 
+	int id_nuevo; 
+	for (i=0; i < MAX_CLIENTS; i++){
+		ClienteData clienteTemporal = listadoClientes[i]; 
+		cout << "\nc.id: "<< c.id << " userid(): " << message->userid() << endl;
+        cout << "\nc.username: "<< c.username<< " username(): " << message->directmessage().username() << endl;
+        if(c.username == message->directmessage().username()){
+			id_nuevo = clienteTemporal.ClientID;
+
+		}
+			 
+	}
+	cout << "El identificador del cliente que desea enviar el mensaje: " << id_nuevo << endl;
+	DirectMessageResponse * directmessage( new DirectMessage); 
+	directmessage->set_message(message->directmessage().message()); 
+	directmessage->set_userid(id_nuevo); 
+
+	DirectMessageResponse * directmessageres(new DirectMessageResponse); 
+	directmessageres->set_messagestatus("Mensaje enviado"); 
+	ServerMessage * serverMess(new ServerMessage); 
+	serverMess->set_option(8); 
+	serverMess->set_allocated_message(directmessage); 
+	serverMess->set_allocated_directmessageresponse(directmessageres); 
+
 	string binary; 
-	m->SerializeToString(&binary); 
-	enviadoPorSocket(binaty,socket); 
-	// server responde a una persona en específico 
-	DirectMessageResponse * directMessage(new DirectMessage); 
-	directMessage->set_mesagge(message); 
-	//directMessage->set_userid(0) //se tiene que actualizar el protocolo 
-	ServerMessage * pm (new ServerMessage); 
-	pm-> set_option(2); 
-	pm->set_allocated_message(directMessage); 
-	binary = ""; 
-	pm->SerializeToString(&binary); 
+	serverMess->SerializeToString(&binary); 
+    char cstr[binary.size() + 1];
+    strcpy(cstr, binary.c_str());
 
-	//printf("Mnesjae directo: %s/n", username); 
-	user clienteTemporal = obtenerIdUsername(username); 
-	printf("Mensaje Directo: %d/n", clienteTemporal.userId); 
-	enviadoPorSocket(binary, clienteTemporal.socket); 
+	int i = 0; 
+	for (i=0; i < MAX_CLIENTS; i++){
+		ClienteData clienteTemporal = listadoClientes[i]; 
+		cout << "\nc.id: "<< c.id << " userid(): " << id_receiver << endl;
+		if (clienteTemporal.ClientID == id_nuevo){
+			send(connectfd, cstr, strlen(cstr), 0); 
+		}
+
+	}
+
 }
 
 //OPCION CAMBIO STATU
@@ -388,6 +413,14 @@ void *connectClient(void *args)
 			else if (OpcionGeneral == 2)
 			{
 				GetUserInfo(cli_socket, buffer);
+			}
+			else if (OpcionGeneral == 4)
+			{
+				enviarBroadCast(cli_socket, buffer);
+			}
+			else if (OpcionGeneral == 5)
+			{
+				enviarMensajeDirecto(cli_socket, buffer);
 			}
 			else
 			{
