@@ -202,7 +202,6 @@ void menu()
             cout << "1. Activo\n";
             cout << "2. Ocupado\n";
             cout << "3. Inactivo\n";
-            cout << "0. Cancelar\n";
             cout << "\n";
             cout << "Introduzca la opcion que desea ejecutar (0-3): \n";
             cin >> entryStatus;
@@ -210,32 +209,28 @@ void menu()
             
             while (entryStatus != 0)
             {
-                if (entryStatus == 0)
-                {
-                    break;
-                }
                 if (entryStatus == 1)
                 {
                     status = "Activo";
                     CambioStatus(IdGlobal, status, sockfd, buffer);
-                    break;
+                    menu();
                 }
                 else if (entryStatus == 2)
                 {
                     status = "Ocupado";
                     CambioStatus(IdGlobal, status, sockfd, buffer);
-                    break;
+                    menu();
                 }
                 else if (entryStatus == 3)
                 {
                     status = "Inactivo";
                     CambioStatus(IdGlobal, status, sockfd, buffer);
-                    break;
+                    menu();
                 }
                 else
                 {
-                    cout << "Ingrese un opcion valida\n";
-                    break;
+                    cout << "ERROR! Ingrese un opcion valida\n";
+                    menu();
                 }
             }
 
