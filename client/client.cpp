@@ -210,18 +210,22 @@ void menu()
                 cin >> entryStatus;
                 cout << "\n";
                 
-                while (entryStatus != 0) {
-                    if (entryStatus == 1) {
+                while (entryStatus != 0)
+                {
+                    if (entryStatus == 1)
+                    {
                         status = "Activo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         break;
                     }
-                    else if (entryStatus == 2){
+                    else if (entryStatus == 2)
+                    {
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         break;
                     }
-                    else if (entryStatus == 3){
+                    else if (entryStatus == 3)
+                    {
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         break;
@@ -230,7 +234,7 @@ void menu()
                     {
                         cout << "Ingrese un opcion valida\n";
                          break;
-                    }
+                    }while (entryStatus != 0);
                 }
             }
 
