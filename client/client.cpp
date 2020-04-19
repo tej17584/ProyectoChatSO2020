@@ -240,14 +240,14 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
     DirectMessageRequest * direct (new DirectMessageRequest);
     direct->set_message(message);
-    direct->set_userid(id);
+    direct->set_userid(ClienteIdP);
     direct->set_username(entrante);
 
     ClientMessage * c_message(new ClientMessage);
     c_message->set_option(5);
     c_message->set_userid(id);
     c_message->set_allocated_directmessage(direct);
-    cout << "id: " << id<< endl;
+    cout << "id: " << ClienteIdP<< endl;
 
     string binary;
     c_message->SerializeToString(&binary);
@@ -261,13 +261,12 @@ void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
 
 void exitChat(){
     ExitChat *exit(new ExitChat);
-    exit->set_userid(id); 
+    exit->set_userid(ClienteIdP); 
     
     ClientMessage * message(new ClientMessage);
     message->set_option(7);
-    message->set_userid(id);
-    message->set_allocated_exitchat(exit);
-    cout << "id: " << id << endl;
+    message->set_userid(ClienteIdP);
+    cout << "id: " << ClienteIdP << endl;
   
     string binary;
     message->SerializeToString(&binary);
