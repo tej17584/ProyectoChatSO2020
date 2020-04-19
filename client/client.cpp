@@ -13,6 +13,7 @@ using namespace chat;
 
 #define BUFSIZE 1024
 int entrada;
+int sockfd
 
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
@@ -99,7 +100,7 @@ void menu(){
     cout << "\n";
     
     cout << "---------------------------------------------------\n";
-    cout << "Status Actual:" << status << endl;
+    cout << "Status Actual:" << status << "\n";
     cout << "---------------------------------------------------\n";
     cout << "\n";
     
@@ -109,7 +110,6 @@ void menu(){
     cout <<  "\n";
     
     while ( entrada < 1 || entrada > 6 );
-    
     
     switch (entrada)
     {
@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
     
     //Import google Protocol
     GOOGLE_PROTOBUF_VERIFY_VERSION;
-    int sockfd, portno, n;
+    int portno, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
     bool salir = false;
