@@ -54,6 +54,29 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
     cout << "Su estatus se actualizo con exito a: " << ServerResponse->changestatusresponse().status() << endl;
 }
 
+void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char *Buffer)
+{
+    //Creamos un changeStatusRequest
+    cout << "Preparando peticion de Pedido de Usuario especifico...." << endl;
+    connectedUserRequest *PeticionUsuarioConectado(new connectedUserRequest);
+    PeticionUsuarioConectado->set_username(ClientUserName);
+    PeticionUsuarioConectado->set_userid(ClienteIdP);
+
+    // Se crea instancia de Mensaje, se setea los valores deseados
+    ClientMessage *message(new ClientMessage);
+    message->set_option(2);
+    message->set_userid(ClienteIdP);
+    message->set_allocated_connectedusers(PeticionUsuarioConectado);
+    //Se hace binario y string y luego char y se envia
+    string binary;
+    message->SerializeToString(&binary);
+
+    char cstr[binary.size() + 1];
+    strcpy(cstr, binary.c_str());
+    send(sockfd, cstr, strlen(cstr), 0);
+    cout << "Peticion de usuario especifico enviada..." << endl;
+}
+
 int main(int argc, char *argv[])
 {
     cout << "Ingrese el nombre de usuario: ";

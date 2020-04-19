@@ -190,7 +190,7 @@ void *connectClient(void *args)
 			ClientMessage *messageGeneral(new ClientMessage);
 			//message2->ParseFromString(ret2);
 			messageGeneral->ParseFromString(buffer);
-			cout << "Opcion general enviada.... : " << m->option() << endl;
+			cout << "Opcion general enviada.... : " << messageGeneral->option() << endl;
 			OpcionGeneral = messageGeneral->option();
 			if (OpcionGeneral == 3)
 			{
