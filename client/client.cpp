@@ -13,13 +13,13 @@ using namespace chat;
 
 #define BUFSIZE 1024
 int entrada;
+bool inicio = true;
 int sockfd;
 char buffer[BUFSIZE];
 
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
-int entradaStatus;
-bool inicio = true;
+int entryStatus;
 string status = "Activo";
 
 string usuario; //se guarda nombre de usuario
@@ -204,29 +204,29 @@ void menu()
                 cout << "1. Activo\n";
                 cout << "2. Ocupado\n";
                 cout << "3. Inactivo\n";
-                cout << "4. Cancelar\n";
+                cout << "0 Cancelar\n";
                 cout << "\n";
                 cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
-                cin >> entradaStatus;
+                cin >> entryStatus;
                 cout << "\n";
                 
-                while (entradaStatus != 4) {
-                    if (entradaStatus == 1) {
+                while (entryStatus != 0) {
+                    if (entryStatus == 1) {
                         status = "Activo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        //entradaStatus = 4;
+                        //entryStatus = 4;
                         break;
                     }
-                    else if (entradaStatus == 2){
+                    else if (entryStatus == 2){
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        //entradaStatus = 4;
+                        //entryStatus = 4;
                         break;
                     }
-                    else if (entradaStatus == 3){
+                    else if (entryStatus == 3){
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        //entradaStatus = 4;
+                        //entryStatus = 4;
                         break;
                     }else{
                         cout << "Ingrese un opcion valida\n";
@@ -236,6 +236,7 @@ void menu()
 
         //Listado de usuarios
         case 4:
+            cout << "hola";
             obtenerInfoAllUsers(sockfd, buffer);
             break;
 
