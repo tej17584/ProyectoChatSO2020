@@ -250,7 +250,7 @@ int main(int argc, char *argv[])
                                 //Activo
                                 case 1:
                                     cout << "Cambio a estatus Activo\n" ;
-                                    status = "Activo"
+                                    status = "Activo";
                                     CambioStatus(IdGlobal, status, sockfd, buffer);
                                     entradaStatus = 4;
                                     break;
@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
                                 //Ocupado
                                 case 2:
                                     cout << "Cambio a estatus Ocupado\n" ;
-                                    status = "Ocupado"
+                                    status = "Ocupado";
                                     CambioStatus(IdGlobal, status, sockfd, buffer);
                                     entradaStatus = 4;
                                     break;
@@ -266,7 +266,7 @@ int main(int argc, char *argv[])
                                 //Inactivo
                                 case 3:
                                     cout << "Cambio a estatus Inactivo\n" ;
-                                    status = "Inactivo"
+                                    status = "Inactivo";
                                     CambioStatus(IdGlobal, status, sockfd, buffer);
                                     entradaStatus = 4;
                                     break;
