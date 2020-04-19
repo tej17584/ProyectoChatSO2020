@@ -17,6 +17,7 @@ int entrada;
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
 int entradaStatus;
+string status
 
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
@@ -55,7 +56,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
     //s_message->ParseFromString(ret);
     ServerResponse->ParseFromString(Buffer);
 
-    cout << "Su estatus se actualizo con exito a: " << ServerResponse->changestatusresponse().status() << endl;
+    cout << "Su estatus se ha actualizado a: " << ServerResponse->changestatusresponse().status() << endl;
 }
 
 void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char *Buffer)
@@ -104,7 +105,7 @@ int main(int argc, char *argv[])
     if (argc < 3)
     {
         fprintf(stderr, "Uso de %s puesto -- hostname \n", argv[0]);
-        exit(0);
+        exit(0);ƒ
     }
 
     portno = atoi(argv[2]);
@@ -201,6 +202,11 @@ int main(int argc, char *argv[])
             cout << "6. Salir \n";
             cout << "\n";
             
+            
+            cout << "---------------------------------------------------\n";
+            cout << "Status Actual:" << status;
+            cout << "---------------------------------------------------\n";
+            
             cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
             bzero(buffer, BUFSIZE);
             cin >> entrada;
@@ -232,7 +238,7 @@ int main(int argc, char *argv[])
                         cout << "\n" ;
                         
                         do{
-                            cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
+                            cout <<  "Introduzca la opcion que desea ejecutar (1-4): \n" ;
                             cin >> entradaStatus;
                             cout <<  "\n";
                         }
@@ -244,21 +250,24 @@ int main(int argc, char *argv[])
                                 //Activo
                                 case 1:
                                     cout << "Cambio a estatus Activo\n" ;
-                                    CambioStatus(IdGlobal, "Activo", sockfd, buffer);
+                                    status = "Activo"
+                                    CambioStatus(IdGlobal, status, sockfd, buffer);
                                     entradaStatus = 4;
                                     break;
                                  
                                 //Ocupado
                                 case 2:
                                     cout << "Cambio a estatus Ocupado\n" ;
-                                    CambioStatus(IdGlobal, "Ocupado", sockfd, buffer);
+                                    status = "Ocupado"
+                                    CambioStatus(IdGlobal, status, sockfd, buffer);
                                     entradaStatus = 4;
                                     break;
                                 
                                 //Inactivo
                                 case 3:
                                     cout << "Cambio a estatus Inactivo\n" ;
-                                    CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
+                                    status = "Inactivo"
+                                    CambioStatus(IdGlobal, status, sockfd, buffer);
                                     entradaStatus = 4;
                                     break;
                             }
