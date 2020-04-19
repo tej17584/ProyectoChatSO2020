@@ -22,8 +22,8 @@ int entradaStatus;
 string status = "Activo";
 
 string usuario; //se guarda nombre de usuario
-string ip; //se guarda la ip del usuario
-int IdGlobal; //id global para el user
+string ip;      //se guarda la ip del usuario
+int IdGlobal;   //id global para el user
 void error(const char *msg)
 {
     perror(msg);
@@ -275,20 +275,34 @@ void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char 
     strcpy(cstr, binary.c_str());
     send(sockfd, cstr, strlen(cstr), 0);
     cout << "Peticion de usuario especifico enviada..." << endl;
+
+    //ahora esperamos la response
+    recv(sockfd, Buffer, BUFSIZE, 0);
+    //string ret(buffer, PORT);
+
+    ServerMessage *ServerResponse(new ServerMessage);
+    //s_message->ParseFromString(ret);
+    ServerResponse->ParseFromString(Buffer);
+    //Construimos  un connectedUserResponse
+
+    cout << "El nombre consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).username() << endl;
+    cout << "El ID consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).userid() << endl;
+    cout << "El IP consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).ip() << endl;
+    cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).status() << endl;
 }
 
 int main(int argc, char *argv[])
 {
     cout << "Ingrese el nombre de usuario: ";
     while (getline(cin, usuario))
-    if (usuario != "")
-      break;
-    
+        if (usuario != "")
+            break;
+
     cout << "Ingrese su ip: ";
     while (getline(cin, ip))
-    if (ip != "")
-      break;
-    
+        if (ip != "")
+            break;
+
     //Import google Protocol
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     int portno, n;

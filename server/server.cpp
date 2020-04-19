@@ -67,6 +67,7 @@ void CambioStatus(int clientSocket, char *Buffer)
 		{
 
 			Cliente.ClientStatus = m->changestatus().status();
+			listadoClientes[i].ClientStatus = Cliente.ClientStatus;
 		}
 	}
 
@@ -87,6 +88,49 @@ void CambioStatus(int clientSocket, char *Buffer)
 	char cstr[binary.size() + 1];
 	strcpy(cstr, binary.c_str());
 	send(clientSocket, cstr, strlen(cstr), 0);
+}
+
+//OPCION CAMBIO STATU
+void GetUserInfo(int clientSocket, char *Buffer)
+{
+	ClientMessage *m(new ClientMessage);
+	m->ParseFromString(Buffer);
+	cout << "El UserName a consultar es: " << m->connectedusers().username() << endl;
+	//Construimos  un connectedUserResponse
+	ConnectedUserResponse *CUR(new ConnectedUserResponse);
+	//Construimos un connectedUSerREquest
+	ConnectedUser *cu = CUR->add_connectedusers();
+
+	//Buscamos la info de la persona
+	//Cambiamos el estado
+	int i;
+	for (i = 0; i < MAX_CLIENTS; i++)
+	{
+		ClienteData Cliente = listadoClientes[i];
+
+		if (Cliente.ClientID == m->connectedusers().userid())
+		{
+			//Asignamos valores al protocolo
+			cu->set_userid(Cliente.ClientID);
+			cu->set_username(Cliente.ClientUserName);
+			cu->set_ip(Cliente.ClientIP);
+			cu->set_status(Cliente.ClientStatus);
+		}
+	}
+
+	//Construimos mensaje dle server
+	ServerMessage *server_res(new ServerMessage);
+	//El 5 es la response del usuario
+	server_res->set_option(5);
+	server_res->set_allocated_connecteduserresponse(CUR);
+	// Se serializa la respuesta a string
+	string binary;
+	server_res->SerializeToString(&binary);
+
+	char cstr[binary.size() + 1];
+	strcpy(cstr, binary.c_str());
+	send(clientSocket, cstr, strlen(cstr), 0);
+	cout << "Enviando info al cliente" << endl;
 }
 
 //define connection with client
@@ -195,6 +239,10 @@ void *connectClient(void *args)
 			if (OpcionGeneral == 3)
 			{
 				CambioStatus(cli_socket, buffer);
+			}
+			else if (OpcionGeneral == 2)
+			{
+				GetUserInfo(cli_socket, buffer);
 			}
 			else
 			{
