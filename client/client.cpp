@@ -14,6 +14,7 @@ using namespace chat;
 #define BUFSIZE 1024
 int entrada;
 int sockfd;
+char buffer[BUFSIZE];
 
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
@@ -197,7 +198,6 @@ int main(int argc, char *argv[])
     struct sockaddr_in serv_addr;
     struct hostent *server;
     bool salir = false;
-    char buffer[BUFSIZE];
 
     if (argc < 3)
     {
