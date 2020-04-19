@@ -214,7 +214,7 @@ void menu()
                         entradaStatus = 4;
                         break;
                     }else{
-                        cout << "Ingrese un opcion valida\n"
+                        cout << "Ingrese un opcion valida\n";
                     }
                     break;
                 }
@@ -238,6 +238,7 @@ void menu()
             break;
         }
         while (entrada != 6);
+    }
 }
 
 int main(int argc, char *argv[])
