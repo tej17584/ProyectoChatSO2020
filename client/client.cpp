@@ -197,47 +197,43 @@ void menu()
 
         //Cambio de status
         case 3:
-            do
+            cout << "Cambio de estatus\n";
+            cout << "Ingrese el numero de la opcion que desea:\n";
+            cout << "1. Activo\n";
+            cout << "2. Ocupado\n";
+            cout << "3. Inactivo\n";
+            cout << "0. Cancelar\n";
+            cout << "\n";
+            cout << "Introduzca la opcion que desea ejecutar (0-3): \n";
+            cin >> entryStatus;
+            cout << "\n";
+            
+            while (entryStatus < 0 || entryStatus > 3)
             {
-                cout << "Cambio de estatus\n";
-                cout << "Ingrese el numero de la opcion que desea:\n";
-                cout << "1. Activo\n";
-                cout << "2. Ocupado\n";
-                cout << "3. Inactivo\n";
-                cout << "0. Cancelar\n";
-                cout << "\n";
-                cout << "Introduzca la opcion que desea ejecutar (0-3): \n";
-                cin >> entryStatus;
-                cout << "\n";
-                
-                while (entryStatus < 0 || entryStatus > 3)
+                if (entryStatus == 1)
                 {
-                    if (entryStatus == 1)
-                    {
-                        status = "Activo";
-                        CambioStatus(IdGlobal, status, sockfd, buffer);
-                        break;
-                    }
-                    else if (entryStatus == 2)
-                    {
-                        status = "Ocupado";
-                        CambioStatus(IdGlobal, status, sockfd, buffer);
-                        break;
-                    }
-                    else if (entryStatus == 3)
-                    {
-                        status = "Inactivo";
-                        CambioStatus(IdGlobal, status, sockfd, buffer);
-                        break;
-                    }
-                    else
-                    {
-                        cout << "Ingrese un opcion valida\n";
-                        break;
-                    }
+                    status = "Activo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    break;
                 }
-            }while (entryStatus != 0);
-            break;
+                else if (entryStatus == 2)
+                {
+                    status = "Ocupado";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    break;
+                }
+                else if (entryStatus == 3)
+                {
+                    status = "Inactivo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    break;
+                }
+                else
+                {
+                    cout << "Ingrese un opcion valida\n";
+                    break;
+                }
+            }
 
         //Listado de usuarios
         case 4:
