@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
             while ( entrada < 1 || entrada > 6 );
             
             
-            switch (opcion)
+            switch (entrada)
             {
                 //Mensaje directo
                 case 1:
@@ -262,7 +262,7 @@ int main(int argc, char *argv[])
                                     entradaStatus = 4;
                                     break;
                             }
-                        } while ( var != 4 );
+                        } while ( entradaStatus != 4 );
                     
                 //Listado de usuarios
                 case 4:
