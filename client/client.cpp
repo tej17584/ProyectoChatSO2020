@@ -12,6 +12,7 @@ using namespace std;
 using namespace chat;
 
 #define BUFSIZE 1024
+string entrada;
 
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
@@ -22,15 +23,16 @@ void error(const char *msg)
     exit(0);
 }
 
-void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *Buffer)
+void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer)
 {
     //Creamos un changeStatusRequest
-    cout << "Preparando envio de status" << endl;
+    cout << "Preparando peticion de cambio de status" << endl;
     ChangeStatusRequest *CambioStatusRequest(new ChangeStatusRequest);
     CambioStatusRequest->set_status(ClientStatusP);
+
     // Se crea instancia de Mensaje, se setea los valores deseados
     ClientMessage *message(new ClientMessage);
-    message->set_option('3');
+    message->set_option(3);
     message->set_userid(ClienteIdP);
     message->set_allocated_changestatus(CambioStatusRequest);
     //Se hace binario y string y luego char y se envia
@@ -39,7 +41,17 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int clientSocket, char *
 
     char cstr[binary.size() + 1];
     strcpy(cstr, binary.c_str());
-    send(clientSocket, cstr, strlen(cstr), 0);
+    send(sockfd, cstr, strlen(cstr), 0);
+    cout << "Su Peticion de cambio de Status fue enviada, esperando respuesta..." << endl;
+    //ahora esperamos la response
+    recv(sockfd, Buffer, BUFSIZE, 0);
+    //string ret(buffer, PORT);
+
+    ServerMessage *ServerResponse(new ServerMessage);
+    //s_message->ParseFromString(ret);
+    ServerResponse->ParseFromString(Buffer);
+
+    cout << "Su estatus se actualizo con exito a: " << ServerResponse->changestatusresponse().status() << endl;
 }
 
 int main(int argc, char *argv[])
@@ -141,6 +153,8 @@ int main(int argc, char *argv[])
     send(sockfd, cstr2, strlen(cstr2), 0);
     printf("PASO 3 Ya le dije al sERVER QUE SI QUIERO SER SU AMIGO\n");
 
+    char bufOpcion[BUFSIZE];
+
     do
     {
         printf("\n");
@@ -148,9 +162,15 @@ int main(int argc, char *argv[])
         {
             printf("Cliente: ");
             bzero(buffer, BUFSIZE);
-            //CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
-            fgets(buffer, BUFSIZE, stdin);
-            send(sockfd, buffer, BUFSIZE, 0);
+            cin >> entrada;
+            if (entrada == "1")
+            {
+                CambioStatus(IdGlobal, "Haragan", sockfd, buffer);
+            }
+
+            //fgets(buffer, BUFSIZE, stdin);
+            //send(sockfd, buffer, BUFSIZE, 0);
+
             if (*buffer == '#')
             {
                 send(sockfd, buffer, BUFSIZE, 0);
