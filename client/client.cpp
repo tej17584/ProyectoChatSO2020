@@ -22,6 +22,7 @@ int entradaStatus;
 string status = "Activo";
 
 string usuario; //se guarda nombre de usuario
+string usuarioInf; //se guarda nombre de usuario
 string ip;      //se guarda la ip del usuario
 int IdGlobal;   //id global para el user
 void error(const char *msg)
@@ -65,6 +66,114 @@ void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char 
     cout << "El ID consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).userid() << endl;
     cout << "El IP consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).ip() << endl;
     cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).status() << endl;
+    
+    //regresa al menu
+    cout << "\n";
+    cout << "---------------------------------------------------\n";
+    cout << "Bienvenido a Chat SISTOS\n";
+    cout << "---------------------------------------------------\n";
+    cout << "\n";
+    cout << "Ingrese el numero de la opcion que deasea ejecutar\n";
+    cout << "1. Mensaje directo\n";
+    cout << "2. Broadcasting (Chat general) \n";
+    cout << "3. Cambio de status\n";
+    cout << "4. Listado de usuarios\n";
+    cout << "5. Informacion de un usuario\n";
+    cout << "6. Salir \n";
+    cout << "\n";
+
+    cout << "---------------------------------------------------\n";
+    cout << "Nombre de usuario:" << usuario << "\n";
+    cout << "Status Actual:" << status << "\n";
+    cout << "---------------------------------------------------\n";
+    cout << "\n";
+
+    cout << "Introduzca la opcion que desea ejecutar (1-6): \n";
+    bzero(buffer, BUFSIZE);
+    cin >> entrada;
+    cout << "\n";
+
+    while (entrada < 1 || entrada > 6);
+
+    switch (entrada)
+    {
+        //Mensaje directo
+        case 1:
+            break;
+
+        //Broadcast
+        case 2:
+            break;
+
+        //Cambio de status
+        case 3:
+            do
+            {
+                cout << "Cambio de estatus\n";
+                cout << "Ingrese el numero de la opcion que desea:\n";
+                cout << "1. Activo\n";
+                cout << "2. Ocupado\n";
+                cout << "3. Inactivo\n";
+                cout << "4. Salir\n";
+                cout << "\n";
+
+                do
+                {
+                    cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
+                    cin >> entradaStatus;
+                    cout << "\n";
+                }
+
+                while (entradaStatus < 1 || entradaStatus > 4);
+
+                switch (entradaStatus)
+                {
+                //Activo
+                case 1:
+                    cout << "Cambio a estatus Activo\n";
+                    status = "Activo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Ocupado
+                case 2:
+                    cout << "Cambio a estatus Ocupado\n";
+                    status = "Ocupado";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Inactivo
+                case 3:
+                    cout << "Cambio a estatus Inactivo\n";
+                    status = "Inactivo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+                }
+            } while (entradaStatus != 4);
+            break;
+
+        //Listado de usuarios
+        case 4:
+            obtenerInfoAllUsers(sockfd, buffer);
+            break;
+
+        //Informacion de usuario
+        case 5:
+            cout << "Ingrese el usuario que desea ver: \n";
+            while (getline(cin, usuarioInf))
+            if (usuarioInf != "")
+                break;
+            obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
+            break;
+                
+        //salir
+        case 6:
+            break;
+        }
+        while (entrada != 6);
 }
 //Metodo para obtener toda la info
 void obtenerInfoAllUsers(int sockfd, char *Buffer)
@@ -107,6 +216,114 @@ void obtenerInfoAllUsers(int sockfd, char *Buffer)
         cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).status() << endl;
         cout << "------------------------------------------------------" << endl;
     }
+    
+    //regresa al menu
+    cout << "\n";
+    cout << "---------------------------------------------------\n";
+    cout << "Bienvenido a Chat SISTOS\n";
+    cout << "---------------------------------------------------\n";
+    cout << "\n";
+    cout << "Ingrese el numero de la opcion que deasea ejecutar\n";
+    cout << "1. Mensaje directo\n";
+    cout << "2. Broadcasting (Chat general) \n";
+    cout << "3. Cambio de status\n";
+    cout << "4. Listado de usuarios\n";
+    cout << "5. Informacion de un usuario\n";
+    cout << "6. Salir \n";
+    cout << "\n";
+
+    cout << "---------------------------------------------------\n";
+    cout << "Nombre de usuario:" << usuario << "\n";
+    cout << "Status Actual:" << status << "\n";
+    cout << "---------------------------------------------------\n";
+    cout << "\n";
+
+    cout << "Introduzca la opcion que desea ejecutar (1-6): \n";
+    bzero(buffer, BUFSIZE);
+    cin >> entrada;
+    cout << "\n";
+
+    while (entrada < 1 || entrada > 6);
+
+    switch (entrada)
+    {
+        //Mensaje directo
+        case 1:
+            break;
+
+        //Broadcast
+        case 2:
+            break;
+
+        //Cambio de status
+        case 3:
+            do
+            {
+                cout << "Cambio de estatus\n";
+                cout << "Ingrese el numero de la opcion que desea:\n";
+                cout << "1. Activo\n";
+                cout << "2. Ocupado\n";
+                cout << "3. Inactivo\n";
+                cout << "4. Salir\n";
+                cout << "\n";
+
+                do
+                {
+                    cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
+                    cin >> entradaStatus;
+                    cout << "\n";
+                }
+
+                while (entradaStatus < 1 || entradaStatus > 4);
+
+                switch (entradaStatus)
+                {
+                //Activo
+                case 1:
+                    cout << "Cambio a estatus Activo\n";
+                    status = "Activo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Ocupado
+                case 2:
+                    cout << "Cambio a estatus Ocupado\n";
+                    status = "Ocupado";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Inactivo
+                case 3:
+                    cout << "Cambio a estatus Inactivo\n";
+                    status = "Inactivo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+                }
+            } while (entradaStatus != 4);
+            break;
+
+        //Listado de usuarios
+        case 4:
+            obtenerInfoAllUsers(sockfd, buffer);
+            break;
+
+        //Informacion de usuario
+        case 5:
+            cout << "Ingrese el usuario que desea ver: \n";
+            while (getline(cin, usuarioInf))
+            if (usuarioInf != "")
+                break;
+            obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
+            break;
+                
+        //salir
+        case 6:
+            break;
+        }
+        while (entrada != 6);
 }
 
 void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer)
@@ -138,6 +355,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 
     cout << "Su estatus se ha actualizado a: " << ServerResponse->changestatusresponse().status() << endl;
 
+    //regresa al menu
     cout << "\n";
     cout << "---------------------------------------------------\n";
     cout << "Bienvenido a Chat SISTOS\n";
@@ -162,79 +380,87 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
     cin >> entrada;
     cout << "\n";
 
-    while (entrada < 1 || entrada > 6)
-        ;
+    while (entrada < 1 || entrada > 6);
 
     switch (entrada)
     {
-    //Mensaje directo
-    case 1:
-        break;
+        //Mensaje directo
+        case 1:
+            break;
 
-    //Broadcast
-    case 2:
-        break;
+        //Broadcast
+        case 2:
+            break;
 
-    //Cambio de status
-    case 3:
-        do
-        {
-            cout << "Cambio de estatus\n";
-            cout << "Ingrese el numero de la opcion que desea:\n";
-            cout << "1. Activo\n";
-            cout << "2. Ocupado\n";
-            cout << "3. Inactivo\n";
-            cout << "4. Salir\n";
-            cout << "\n";
-
+        //Cambio de status
+        case 3:
             do
             {
-                cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
-                cin >> entradaStatus;
+                cout << "Cambio de estatus\n";
+                cout << "Ingrese el numero de la opcion que desea:\n";
+                cout << "1. Activo\n";
+                cout << "2. Ocupado\n";
+                cout << "3. Inactivo\n";
+                cout << "4. Salir\n";
                 cout << "\n";
-            }
 
-            while (entradaStatus < 1 || entradaStatus > 4);
+                do
+                {
+                    cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
+                    cin >> entradaStatus;
+                    cout << "\n";
+                }
 
-            switch (entradaStatus)
-            {
-            //Activo
-            case 1:
-                cout << "Cambio a estatus Activo\n";
-                status = "Activo";
-                CambioStatus(IdGlobal, status, sockfd, buffer);
-                entradaStatus = 4;
+                while (entradaStatus < 1 || entradaStatus > 4);
+
+                switch (entradaStatus)
+                {
+                //Activo
+                case 1:
+                    cout << "Cambio a estatus Activo\n";
+                    status = "Activo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Ocupado
+                case 2:
+                    cout << "Cambio a estatus Ocupado\n";
+                    status = "Ocupado";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Inactivo
+                case 3:
+                    cout << "Cambio a estatus Inactivo\n";
+                    status = "Inactivo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+                }
+            } while (entradaStatus != 4);
+            break;
+
+        //Listado de usuarios
+        case 4:
+            obtenerInfoAllUsers(sockfd, buffer);
+            break;
+
+        //Informacion de usuario
+        case 5:
+            cout << "Ingrese el usuario que desea ver: \n";
+            while (getline(cin, usuarioInf))
+            if (usuarioInf != "")
                 break;
-
-            //Ocupado
-            case 2:
-                cout << "Cambio a estatus Ocupado\n";
-                status = "Ocupado";
-                CambioStatus(IdGlobal, status, sockfd, buffer);
-                entradaStatus = 4;
-                break;
-
-            //Inactivo
-            case 3:
-                cout << "Cambio a estatus Inactivo\n";
-                status = "Inactivo";
-                CambioStatus(IdGlobal, status, sockfd, buffer);
-                entradaStatus = 4;
-                break;
-            }
-        } while (entradaStatus != 4);
-        break;
-
-    //Listado de usuarios
-    case 4:
-        break;
-
-    //Informacion de usuario
-    case 5:
-        break;
+            obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
+            break;
+                
+        //salir
+        case 6:
+            break;
     }
-    while (entrada != 6)
-        ;
+    while (entrada != 6);
 }
 
 void menu()
@@ -254,6 +480,7 @@ void menu()
     cout << "\n";
 
     cout << "---------------------------------------------------\n";
+    cout << "Nombre de usuario:" << usuario << "\n";
     cout << "Status Actual:" << status << "\n";
     cout << "---------------------------------------------------\n";
     cout << "\n";
@@ -263,81 +490,87 @@ void menu()
     cin >> entrada;
     cout << "\n";
 
-    while (entrada < 1 || entrada > 6)
-        ;
+    while (entrada < 1 || entrada > 6);
 
     switch (entrada)
     {
-    //Mensaje directo
-    case 1:
-        break;
+        //Mensaje directo
+        case 1:
+            break;
 
-    //Broadcast
-    case 2:
-        break;
+        //Broadcast
+        case 2:
+            break;
 
-    //Cambio de status
-    case 3:
-        do
-        {
-            cout << "Cambio de estatus\n";
-            cout << "Ingrese el numero de la opcion que desea:\n";
-            cout << "1. Activo\n";
-            cout << "2. Ocupado\n";
-            cout << "3. Inactivo\n";
-            cout << "4. Salir\n";
-            cout << "\n";
-
+        //Cambio de status
+        case 3:
             do
             {
-                cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
-                cin >> entradaStatus;
+                cout << "Cambio de estatus\n";
+                cout << "Ingrese el numero de la opcion que desea:\n";
+                cout << "1. Activo\n";
+                cout << "2. Ocupado\n";
+                cout << "3. Inactivo\n";
+                cout << "4. Salir\n";
                 cout << "\n";
-            }
 
-            while (entradaStatus < 1 || entradaStatus > 4);
+                do
+                {
+                    cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
+                    cin >> entradaStatus;
+                    cout << "\n";
+                }
 
-            switch (entradaStatus)
-            {
-            //Activo
-            case 1:
-                cout << "Cambio a estatus Activo\n";
-                status = "Activo";
-                CambioStatus(IdGlobal, status, sockfd, buffer);
-                entradaStatus = 4;
+                while (entradaStatus < 1 || entradaStatus > 4);
+
+                switch (entradaStatus)
+                {
+                //Activo
+                case 1:
+                    cout << "Cambio a estatus Activo\n";
+                    status = "Activo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Ocupado
+                case 2:
+                    cout << "Cambio a estatus Ocupado\n";
+                    status = "Ocupado";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+
+                //Inactivo
+                case 3:
+                    cout << "Cambio a estatus Inactivo\n";
+                    status = "Inactivo";
+                    CambioStatus(IdGlobal, status, sockfd, buffer);
+                    entradaStatus = 4;
+                    break;
+                }
+            } while (entradaStatus != 4);
+            break;
+
+        //Listado de usuarios
+        case 4:
+            obtenerInfoAllUsers(sockfd, buffer);
+            break;
+
+        //Informacion de usuario
+        case 5:
+            cout << "Ingrese el usuario que desea ver: \n";
+            while (getline(cin, usuarioInf))
+            if (usuarioInf != "")
                 break;
-
-            //Ocupado
-            case 2:
-                cout << "Cambio a estatus Ocupado\n";
-                status = "Ocupado";
-                CambioStatus(IdGlobal, status, sockfd, buffer);
-                entradaStatus = 4;
-                break;
-
-            //Inactivo
-            case 3:
-                cout << "Cambio a estatus Inactivo\n";
-                status = "Inactivo";
-                CambioStatus(IdGlobal, status, sockfd, buffer);
-                entradaStatus = 4;
-                break;
-            }
-        } while (entradaStatus != 4);
-        break;
-
-    //Listado de usuarios
-    case 4:
-        obtenerInfoAllUsers(sockfd, buffer);
-        break;
-
-    //Informacion de usuario
-    case 5:
-        obtenerInfoUsuario(IdGlobal, "JOSE", sockfd, buffer);
-        break;
-    }
-    while (entrada != 6)
-        ;
+            obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
+            break;
+                
+        //salir
+        case 6:
+            break;
+        }
+        while (entrada != 6);
 }
 
 int main(int argc, char *argv[])
