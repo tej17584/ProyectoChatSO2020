@@ -202,10 +202,10 @@ int main(int argc, char *argv[])
             cout << "6. Salir \n";
             cout << "\n";
             
-            
             cout << "---------------------------------------------------\n";
             cout << "Status Actual:" << status << endl;
             cout << "---------------------------------------------------\n";
+            cout << "\n";
             
             cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
             bzero(buffer, BUFSIZE);
