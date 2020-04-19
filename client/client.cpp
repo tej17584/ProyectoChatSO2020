@@ -12,7 +12,7 @@ using namespace std;
 using namespace chat;
 
 #define BUFSIZE 1024
-string entrada;
+int entrada;
 
 //variable para ver la opcion que se desea realizar
 int var;
