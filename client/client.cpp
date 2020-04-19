@@ -206,7 +206,7 @@ void menu()
                 cout << "3. Inactivo\n";
                 cout << "0. Cancelar\n";
                 cout << "\n";
-                cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
+                cout << "Introduzca la opcion que desea ejecutar (0-3): \n";
                 cin >> entryStatus;
                 cout << "\n";
                 
@@ -236,7 +236,6 @@ void menu()
 
         //Listado de usuarios
         case 4:
-            cout << "hola";
             obtenerInfoAllUsers(sockfd, buffer);
             break;
 
@@ -253,7 +252,7 @@ void menu()
         case 6:
             break;
         }
-        //while (entrada != 6);
+        while (entrada != 6);
     }
 }
 
