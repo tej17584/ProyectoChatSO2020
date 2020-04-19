@@ -19,7 +19,7 @@ char buffer[BUFSIZE];
 
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
-int entryStatus;
+string entryStatus;
 string status = "Activo";
 
 string usuario; //se guarda nombre de usuario
@@ -203,25 +203,25 @@ void menu()
             cout << "2. Ocupado\n";
             cout << "3. Inactivo\n";
             cout << "\n";
-            cout << "Introduzca la opcion que desea ejecutar (0-3): \n";
+            cout << "Introduzca la opcion que desea ejecutar (1-3): \n";
             cin >> entryStatus;
             cout << "\n";
             
-            while (entryStatus != 0)
+            while (entryStatus != "0")
             {
-                if (entryStatus == 1)
+                if (entryStatus == "1")
                 {
                     status = "Activo";
                     CambioStatus(IdGlobal, status, sockfd, buffer);
                     menu();
                 }
-                else if (entryStatus == 2)
+                else if (entryStatus == "2")
                 {
                     status = "Ocupado";
                     CambioStatus(IdGlobal, status, sockfd, buffer);
                     menu();
                 }
-                else if (entryStatus == 3)
+                else if (entryStatus == "3")
                 {
                     status = "Inactivo";
                     CambioStatus(IdGlobal, status, sockfd, buffer);
