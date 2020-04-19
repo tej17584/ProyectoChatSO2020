@@ -68,9 +68,35 @@ void cambioEstatus() {
         } while ( var != 4 );
 }
 
+
+//funcion de broadcast
+//void broadcast() {
+//
+//    string opcion1;
+//    cout << "-------------------\n";
+//    cout << "BROADCAST\n";
+//    cout << "-------------------\n";
+//    cout << "\n";
+//
+//    cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
+//    while (getline(cin, opcion1))
+//    if (opcion1 != "")
+//      break;
+//    cout <<  "\n";
+//
+//    if (opcion1 == "0") {
+//        menu();
+//    }
+//    else{
+//        cout << "mensaje";
+//    }
+//}
+
+
 int main()  {
     //variable para ver la opcion que se desea realizar
     int opcion;
+    string opcion1;
     
     //variables donde se guarda el input del usuario
     char input11 [20];
@@ -132,16 +158,33 @@ int main()  {
              
             //Broadcast
             case 2:
-                cout << "BROADCAST\n" ;
-                cout << "Ingrese el mensaje que desea enviar\n";
-                while (getline(cin, input2))
-                if (input2 != "")
+                cout << "-------------------\n";
+                cout << "BROADCAST\n";
+                cout << "-------------------\n";
+                cout << "\n";
+
+                cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
+                while (getline(cin, opcion1))
+                if (opcion1 != "")
                   break;
-                cout << "\n";
+                cout <<  "\n";
+                cout << "mensaje: " << opcion1;
+                cout <<  "\n";
                 
-                cout << "Mensaje:\n";
-                cout << input2;
-                cout << "\n";
+                if (opcion1 == "0") {
+                    break;
+                }
+                else{
+                    while (opcion1 != "0") {
+                        cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
+                        while (getline(cin, opcion1))
+                        if (opcion1 != "")
+                          break;
+                        cout <<  "\n";
+                        cout << "mensaje: " << opcion1;
+                        cout <<  "\n";
+                    }
+                }
                 break;
             
             //Cambio de estatus
