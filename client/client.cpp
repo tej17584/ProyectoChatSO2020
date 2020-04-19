@@ -215,19 +215,16 @@ void menu()
                         status = "Activo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         menu();
-                        break;
                     }
                     else if (entryStatus == 2){
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         menu();
-                        break;
                     }
                     else if (entryStatus == 3){
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
                         menu();
-                        break;
                     }else{
                         cout << "Ingrese un opcion valida\n";
                     }
