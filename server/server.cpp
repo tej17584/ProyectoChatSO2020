@@ -21,7 +21,6 @@ using namespace chat;
 // ------------------------------------------------S T A R T -----------------------------------------//
 #define MAX_CLIENTS 35 // number of students in class (assuming each one will be a client)
 #define BUFSIZE 1024
-#define PORT 8080 
 int portno2;
 char Buffer[BUFSIZE]; 
 
@@ -93,22 +92,22 @@ void CambioStatus(int clientSocket, char *Buffer)
 }
 
 void salirCliente(int clientSocket, char *Buffer) {
-	read( clientSocket, Buffer, PORT ); 
+	read( clientSocket, Buffer, portno2 ); 
 	ClientMessage* message(new ClientMessage); 
 
 	m->ParseFromString(Buffer); 
-	cout << "El Cliente ID:" m->exitchat().userid() << "desea abandonar la sesión" << endl; 
+	cout << "El Cliente ID:" m->userid() << "desea abandonar la sesión" << endl; 
 	int i; 
 	for (i = 0; i < MAX_CLIENTS; i++){
 		ClienteData clienteTemporal  = listadoClientes[i]; 
-		if (clienteTemporal.ClientID == m->exitchat().userid()){
+		if (clienteTemporal.ClientID == m->userid()){
 			ClienteData emptyClient; 
 			listadoClientes[i] = emptyClient; 
 		}
 
 	}
 
-	cout << "El cliente con ID: " << m-> exitchat().userid() << "ha abandonado la sesión actual" << endl; 
+	cout << "El cliente con ID: " << m-> userid() << "ha abandonado la sesión actual" << endl; 
 
 }
 
@@ -129,7 +128,7 @@ void obtenerUsuario (int id){
 }
 
 void enviarBroadCast(int id, string message, int socket){
-	BroadcastResponse * response( New BroadcastResponse); 
+	BroadcastResponse * response( new BroadcastResponse); 
 	response->set_messagestatus("SEND"); 
 	ServerMessage * m(new ServerMessage); 
 	m->set_option(7); 
