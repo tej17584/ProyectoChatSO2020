@@ -14,6 +14,7 @@ using namespace chat;
 #define BUFSIZE 1024
 string entrada;
 
+
 string usuario; //se guarda nombre de usuario
 string ip; //se guarda la ip del usuario
 int IdGlobal; //id global para el user
@@ -75,6 +76,58 @@ void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char 
     strcpy(cstr, binary.c_str());
     send(sockfd, cstr, strlen(cstr), 0);
     cout << "Peticion de usuario especifico enviada..." << endl;
+}
+
+//metodo para hacer cambio de estatus
+void cambioEstatus() {
+    //variable para ver la opcion que se desea realizar
+    int var;
+    //variable donde se guarda el estado
+    string input3;
+    
+    //menu de cambio de estado
+    do
+    {
+        cout << "Cambio de estatus\n";
+        cout << "Ingrese el numero de la opcion que desea:\n";
+        cout << "1. Activo\n" ;
+        cout << "2. Ocupado\n" ;
+        cout << "3. Inactivo\n" ;
+        cout << "4. Salir\n" ;
+        cout << "\n" ;
+        
+        do{
+            cout <<  "Introduzca la opcion que desea ejecutar (1-4 : \n" ;
+            cin >> var;
+            cout <<  "\n";
+        }
+        
+        while ( var < 1 || var > 4 );
+            
+            switch (var)
+            {
+                //Activo
+                case 1:
+                    cout << "Cambio a estatus Activo\n" ;
+                    CambioStatus(IdGlobal, "Activo", sockfd, buffer);
+                    var = 4;
+                    break;
+                 
+                //Ocupado
+                case 2:
+                    cout << "Cambio a estatus Ocupado\n" ;
+                    CambioStatus(IdGlobal, "Ocupado", sockfd, buffer);
+                    var = 4;
+                    break;
+                
+                //Inactivo
+                case 3:
+                    cout << "Cambio a estatus Inactivo\n" ;
+                    CambioStatus(IdGlobal, "Inactivo", sockfd, buffer);
+                    var = 4;
+                    break;
+            }
+        } while ( var != 4 );
 }
 
 int main(int argc, char *argv[])
@@ -183,24 +236,126 @@ int main(int argc, char *argv[])
         printf("\n");
         do
         {
-            printf("Cliente: ");
-            bzero(buffer, BUFSIZE);
-            cin >> entrada;
-            if (entrada == "1")
-            {
-                CambioStatus(IdGlobal, "Haragan", sockfd, buffer);
+            cout << "\n";
+            cout << "---------------------------------------------------\n";
+            cout << "Bienvenido a Chat SISTOS\n";
+            cout << "---------------------------------------------------\n";
+            cout << "\n";
+            cout << "Ingrese el numero de la opcion que deasea ejecutar\n";
+            cout << "1. Mensaje directo\n";
+            cout << "2. Broadcasting (Chat general) \n";
+            cout << "3. Cambio de status\n";
+            cout << "4. Listado de usuarios\n";
+            cout << "5. Informacion de un usuario\n";
+            cout << "6. Salir \n";
+            cout << "\n";
+            
+            do{
+                cout <<  "Introduzca la opcion que desea ejecutar (1-6): \n";
+                bzero(buffer, BUFSIZE);
+                cin >> entrada;
+                cout <<  "\n";
             }
-
-            //fgets(buffer, BUFSIZE, stdin);
-            //send(sockfd, buffer, BUFSIZE, 0);
-
-            if (*buffer == '#')
-            {
-                send(sockfd, buffer, BUFSIZE, 0);
-                salir = true;
-            }
-
-        } while (*buffer != '#');
+            
+            while ( entrada < 1 || entrada > 6 );
+                
+                switch (entrada)
+                {
+                    //Mensaje directo
+//                    case 1:
+//                        cout << "MENSAJE DIRECTO\n";
+//                        cout << "Ingrese el nombre de usuario\n";
+//                        cin.sync();
+//                        cin >> input11;
+//                        cout << "\n";
+//
+//                        cout << "Ingrese el mensaje que desea enviar\n";
+//                        while (getline(cin, input12))
+//                        if (input12 != "")
+//                          break;
+//                        cout << "\n";
+//
+//                        cout << "Usuario:\n";
+//                        cout << input11;
+//                        cout << "\n";
+//                        cout << "Mensaje:\n";
+//                        cout << input12;
+//                        cout << "\n";
+//                        break;
+                     
+                    //Broadcast
+//                    case 2:
+//                        cout << "-------------------\n";
+//                        cout << "BROADCAST\n";
+//                        cout << "-------------------\n";
+//                        cout << "\n";
+//
+//                        cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
+//                        while (getline(cin, opcion1))
+//                        if (opcion1 != "")
+//                          break;
+//                        cout <<  "\n";
+//                        cout << "mensaje: " << opcion1;
+//                        cout <<  "\n";
+//
+//                        if (opcion1 == "0") {
+//                            break;
+//                        }
+//                        else{
+//                            while (opcion1 != "0") {
+//                                cout << "Ingrese su mensaje o ingrese 0 para regresar al menu\n";
+//                                while (getline(cin, opcion1))
+//                                if (opcion1 != "")
+//                                  break;
+//                                cout <<  "\n";
+//                                cout << "mensaje: " << opcion1;
+//                                cout <<  "\n";
+//                            }
+//                        }
+//                        break;
+                    
+                    //Cambio de estatus
+                    case 3:
+                        cambioEstatus();
+                        break;
+                       
+                    //Listado de usuarios
+//                    case 4:
+//                        cout << "Listado de usuarios registrados\n";
+//                        break;
+                      
+                    //Informacion de usuario
+//                    case 5:
+//                        cout << "Informacion de usuario\n";
+//                        cout << "Ingrese nombre de usuario\n";
+//
+//                        cin >>  input5;
+//                        cout << "\n";
+//                        cout << input5;
+//                        break;
+                }
+            } while ( entrada != 6 );
+        }
+//        do
+//        {
+//            printf("Cliente: ");
+//            bzero(buffer, BUFSIZE);
+//            cin >> entrada;
+//            if (entrada == "1")
+//            {
+//                CambioStatus(IdGlobal, "Haragan", sockfd, buffer);
+//            }
+//
+//            //fgets(buffer, BUFSIZE, stdin);
+//            //send(sockfd, buffer, BUFSIZE, 0);
+//
+//            if (*buffer == '#')
+//            {
+//                send(sockfd, buffer, BUFSIZE, 0);
+//                salir = true;
+//            }
+//
+//        } while (*buffer != '#');
 
     } while (!salir);
 
