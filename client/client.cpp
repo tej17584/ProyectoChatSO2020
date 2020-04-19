@@ -285,8 +285,7 @@ int main(int argc, char *argv[])
         printf("\n");
         do
         {
-            
-
+            menu();
             //fgets(buffer, BUFSIZE, stdin);
             //send(sockfd, buffer, BUFSIZE, 0);
 
