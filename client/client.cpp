@@ -19,6 +19,7 @@ char buffer[BUFSIZE];
 //Cambio status menu
 //variable para ver la opcion que se desea realizar
 int entradaStatus;
+bool inicio = true;
 string status = "Activo";
 
 string usuario; //se guarda nombre de usuario
@@ -143,25 +144,39 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 
 void menu()
 {
-    cout << "\n";
-    cout << "---------------------------------------------------\n";
-    cout << "Bienvenido a Chat SISTOS\n";
-    cout << "---------------------------------------------------\n";
-    cout << "\n";
-    cout << "Ingrese el numero de la opcion que deasea ejecutar\n";
-    cout << "1. Mensaje directo\n";
-    cout << "2. Broadcasting (Chat general) \n";
-    cout << "3. Cambio de status\n";
-    cout << "4. Listado de usuarios\n";
-    cout << "5. Informacion de un usuario\n";
-    cout << "6. Salir \n";
-    cout << "\n";
-
-    cout << "---------------------------------------------------\n";
-    cout << "Nombre de usuario:" << usuario << "\n";
-    cout << "Status Actual:" << status << "\n";
-    cout << "---------------------------------------------------\n";
-    cout << "\n";
+    if (incio == true) {
+        cout << "\n";
+        cout << "---------------------------------------------------\n";
+        cout << "Bienvenido a Chat SISTOS " << usuario << "\n";
+        cout << "Status Actual: " << status << "\n";
+        cout << "Ingrese el numero de la opcion que deasea ejecutar\n";
+        cout << "1. Mensaje directo\n";
+        cout << "2. Broadcasting (Chat general) \n";
+        cout << "3. Cambio de status\n";
+        cout << "4. Listado de usuarios\n";
+        cout << "5. Informacion de un usuario\n";
+        cout << "6. Salir \n";
+        cout << "---------------------------------------------------\n";
+        cout << "\n";
+    }
+    
+    else if (inicio == false) {
+        cout << "---------------------------------------------------\n";
+        cout << "\n";
+        cout << "STATUS ACTUAL: " << status << "\n";
+        cout << "\n";
+        cout << "Ingrese el numero de la opcion que deasea ejecutar:\n";
+        cout << "1. Mensaje directo\n";
+        cout << "2. Broadcasting (Chat general) \n";
+        cout << "3. Cambio de status\n";
+        cout << "4. Listado de usuarios\n";
+        cout << "5. Informacion de un usuario\n";
+        cout << "6. Salir \n";
+        cout << "---------------------------------------------------\n";
+        cout << "\n";
+    }
+    
+    incio = false;
 
     cout << "Introduzca la opcion que desea ejecutar (1-6): \n";
     bzero(buffer, BUFSIZE);
