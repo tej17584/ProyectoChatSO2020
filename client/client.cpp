@@ -204,7 +204,7 @@ void menu()
                 cout << "1. Activo\n";
                 cout << "2. Ocupado\n";
                 cout << "3. Inactivo\n";
-                cout << "0 Cancelar\n";
+                cout << "0. Cancelar\n";
                 cout << "\n";
                 cout << "Introduzca la opcion que desea ejecutar (1-4): \n";
                 cin >> entryStatus;
@@ -214,19 +214,19 @@ void menu()
                     if (entryStatus == 1) {
                         status = "Activo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        //entryStatus = 4;
+                        menu();
                         break;
                     }
                     else if (entryStatus == 2){
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        //entryStatus = 4;
+                        menu();
                         break;
                     }
                     else if (entryStatus == 3){
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        //entryStatus = 4;
+                        menu();
                         break;
                     }else{
                         cout << "Ingrese un opcion valida\n";
@@ -253,7 +253,7 @@ void menu()
         case 6:
             break;
         }
-        while (entrada != 6);
+        //while (entrada != 6);
     }
 }
 
