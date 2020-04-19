@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
                 //Informacion de usuario
                 case 5:
                     break;
-            }
+            } while ( opcion != 6 );
 
             //fgets(buffer, BUFSIZE, stdin);
             //send(sockfd, buffer, BUFSIZE, 0);
