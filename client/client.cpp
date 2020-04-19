@@ -162,7 +162,8 @@ void menu()
     
     else if (inicio == false) {
         cout << "---------------------------------------------------\n";
-        cout << "STATUS ACTUAL: " << status << "\n";
+        cout << "Usuario: " << usuario << "\n";
+        cout << "ESTATUS ACTUAL: " << status << "\n";
         cout << "\n";
         cout << "Ingrese el numero de la opcion que deasea ejecutar:\n";
         cout << "1. Mensaje directo\n";
@@ -245,6 +246,7 @@ void menu()
             while (getline(cin, usuarioInf))
             if (usuarioInf != "")
                 break;
+            cout << "\n";
             obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
             break;
                 
