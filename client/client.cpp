@@ -214,21 +214,25 @@ void menu()
                     if (entryStatus == 1) {
                         status = "Activo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        menu();
+                        break;
                     }
                     else if (entryStatus == 2){
                         status = "Ocupado";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        menu();
+                        break;
                     }
                     else if (entryStatus == 3){
                         status = "Inactivo";
                         CambioStatus(IdGlobal, status, sockfd, buffer);
-                        menu();
-                    }else{
+                        break;
+                    }
+                    else
+                    {
                         cout << "Ingrese un opcion valida\n";
+                         break;
                     }
                 }
+            }
 
         //Listado de usuarios
         case 4:
