@@ -141,7 +141,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
     cout << "Su estatus se ha actualizado a: " << ServerResponse->changestatusresponse().status() << endl;
 }
 
-public void menu()
+void menu()
 {
     cout << "\n";
     cout << "---------------------------------------------------\n";
