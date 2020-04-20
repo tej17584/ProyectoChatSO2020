@@ -205,7 +205,7 @@ void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
 	int i = 0; 
 	for (i=0; i < MAX_CLIENTS; i++){
 		ClienteData clienteTemporal = listadoClientes[i]; 
-		cout << "\nc.id: "<< c.id << " userid(): " << id_receiver << endl;
+		cout << "\nc.id: "<< c.id << " userid(): " << id_nuevo << endl;
 		if (clienteTemporal.ClientID == id_nuevo){
 			send(connectfd, cstr, strlen(cstr), 0); 
 		}
@@ -416,11 +416,11 @@ void *connectClient(void *args)
 			}
 			else if (OpcionGeneral == 4)
 			{
-				enviarBroadCast(cli_socket, buffer);
+				enviarBroadCast(tid, buffer, cli_socket);
 			}
 			else if (OpcionGeneral == 5)
 			{
-				enviarMensajeDirecto(cli_socket, buffer);
+				enviarMensajeDirecto(tid, buffer,  cli_socket);
 			}
 			else
 			{
