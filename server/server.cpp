@@ -139,8 +139,8 @@ void enviarBroadCast(int id, string message, int socket){
 	enviadoPorSocket(binary, socket); 
 	//server se encarga de responder a todos
 	BroadcastResponse * globalResponse( new BroadcastMessage); 
-	globalResponse->set_message(message); 
 	globalResponse->set_userid(id); 
+	globalResponse->set_message(message); 
 	ServerMessage * globalMessage( new ServerMessage ); 
 	globalMessage->set_option(1); 
 	globalMessage->set_allocated_broadcast(globalResponse); 
@@ -149,11 +149,11 @@ void enviarBroadCast(int id, string message, int socket){
 	for (int i = 0; i < listadoClientes.size(); i++){
 		ClienteData clienteTemporal = obtenerUsuario(i); 
 		printf("%d\n", clienteTemporal.ClientID);
-		enviadoPorSocket(binary, clienteTemporal.socket)
+		enviadoPorSocket(binary, clienteTemporal.fdconn)
 	}
 }
 void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
-	count << "Mensaje directo" << endl; 
+	cout << "Mensaje directo" << endl; 
 	read (connectfd, Buffer, portno2); 
 
 	ClientMessage * message(new ClientMessage); 
