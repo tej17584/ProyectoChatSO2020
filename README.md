@@ -50,11 +50,8 @@ Si se desea crear otro cliente se deben de seguir los mismo pasos en otra termin
 
 
 ## Funcionamiento:
-<div align="center">
-	<img src="https://raw.githubusercontent.com/tej17584/ProyectoChatSO2020/toti/foto" alt="Voto" width="200" height="200">  
-</div>
 Al momento de tener el servidor levantado y crear un cliente en la terminal de cliente se pedira un nombre de usuario y una ip (puede ser cualquier número).
-El menu del chat tiene 6 opciones, como se muestra en la imagen.
+El menu del chat tiene las siguientes 6 opciones:
 
 #### Mensaje directo:
 Para que funcione se necesita que existan al menos 2 usuarios para poder enviarse mensajes entre ellos, al momento de escoger esta opcion se le pedira que ingrese el nombre de usuario y el id del usuario al que se le quiere mandar el mensaje (si no sabe la información necesaria, puede correr la opción 4 antes).
