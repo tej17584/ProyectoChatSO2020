@@ -230,7 +230,7 @@ void menu()
             if (mensajeDirecto != "")
                 break;
             cout << "\n";
-            enviarMensajeDirecto(mensajeDirecto, mensajeUsuario, mensajeID, buffer);
+            enviarMensajeDirecto(mensajeDirecto, mensajeUsuario, sockfd, buffer);
             break;
 
         //Broadcast

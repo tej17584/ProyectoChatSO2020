@@ -338,7 +338,7 @@ void *connectClient(void *args)
 			{
 				GetUserInfo(cli_socket, buffer);
 			}
-			else if (OpcionGeneral == 4)
+			else if (OpcionGeneral == 5)
 			{
 				enviarMensajeDirecto(cli_socket, buffer);
 			}
