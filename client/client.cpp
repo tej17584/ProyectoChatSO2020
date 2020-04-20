@@ -22,6 +22,10 @@ char buffer[BUFSIZE];
 string entryStatus;
 string status = "Activo";
 
+string mensajeDirecto;
+string mensajeUsuario;
+int mensajeID;
+
 string usuario; //se guarda nombre de usuario
 string usuarioInf; //se guarda nombre de usuario
 string ip;      //se guarda la ip del usuario
@@ -160,27 +164,27 @@ void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
     char cstr[binary.size() + 1];
     strcpy(cstr, binary.c_str());
 
-    send(fd , cstr , strlen(cstr) , 0 );    
+    send(fd , cstr , strlen(cstr) , 0 );
     
 }
 
-void exitChat(){
-    ExitChat *exit(new ExitChat);
-    exit->set_userid(IdGlobal); 
+// void exitChat(){
+//     ExitChat *exit(new ExitChat);
+//     exit->set_userid(IdGlobal);
     
-    ClientMessage * message(new ClientMessage);
-    message->set_option(7);
-    message->set_userid(IdGlobal);
-    cout << "id: " << IdGlobal << endl;
+//     ClientMessage * message(new ClientMessage);
+//     message->set_option(7);
+//     message->set_userid(IdGlobal);
+//     cout << "id: " << IdGlobal << endl;
   
-    string binary;
-    message->SerializeToString(&binary);
+//     string binary;
+//     message->SerializeToString(&binary);
 
-    char cstr[binary.size() + 1];
-    strcpy(cstr, binary.c_str());
+//     char cstr[binary.size() + 1];
+//     strcpy(cstr, binary.c_str());
 
-    send(fd , cstr , strlen(cstr) , 0 );       
-}
+//     send(fd , cstr , strlen(cstr) , 0 );
+// }
 
 void menu()
 {
@@ -230,6 +234,21 @@ void menu()
     {
         //Mensaje directo
         case 1:
+            cout << "Ingrese el ID del usuario: \n";
+            cin >> mensajeID;
+            cout << "\n";
+
+            cout << "Ingrese el nombre de usuario: \n";
+            while (getline(cin, mensajeUsuario))
+            if (mensajeUsuario != "")
+                break;
+        
+            cout << "Ingrese el mensaje que desea mandar: \n";
+            while (getline(cin, mensajeDirecto))
+            if (mensajeDirecto != "")
+                break;
+            cout << "\n";
+            enviarMensajeDirecto(mensajeDirecto, mensajeUsuario, mensajeID, buffer);
             break;
 
         //Broadcast
