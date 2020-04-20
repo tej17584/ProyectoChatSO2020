@@ -167,19 +167,18 @@ void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
 	count << "Mensaje directo" << endl; 
 	read (connectfd, Buffer, portno2); 
 
-	ClientMessage * message (new ClienteData); 
+	ClientMessage * message (new ClientMessage); 
 	message->ParseFromString(Buffer); 
 
 	cout << "Cliente Message: " << message->directmessage().message() << endl; 
 	cout << "El identificador del cliente que desea enviar el mensaje:" << message->userid() << endl; 
 	
-	int i = 0; 
-	int id_nuevo; 
+	int i, id_nuevo; 
 	for (i=0; i < MAX_CLIENTS; i++){
 		ClienteData clienteTemporal = listadoClientes[i]; 
-		cout << "\nc.id: "<< c.id << " userid(): " << message->userid() << endl;
-        cout << "\nc.username: "<< c.username<< " username(): " << message->directmessage().username() << endl;
-        if(c.username == message->directmessage().username()){
+		cout << "\nc.id: "<< clienteTemporal.id << " userid(): " << message->userid() << endl;
+        cout << "\nc.username: "<< clienteTemporal.username<< " username(): " << message->directmessage().username() << endl;
+        if(clienteTemporal.username == message->directmessage().username()){
 			id_nuevo = clienteTemporal.ClientID;
 
 		}
@@ -202,7 +201,7 @@ void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
     char cstr[binary.size() + 1];
     strcpy(cstr, binary.c_str());
 
-	int i = 0; 
+	int i; 
 	for (i=0; i < MAX_CLIENTS; i++){
 		ClienteData clienteTemporal = listadoClientes[i]; 
 		cout << "\nc.id: "<< c.id << " userid(): " << id_nuevo << endl;
