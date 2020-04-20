@@ -147,7 +147,7 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 }
 
 void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
-    DirectMessageRequest * direct (new DirectMessageRequest);
+    DirectMessageRequest * direct(new DirectMessageRequest);
     direct->set_message(message);
     direct->set_userid(IdGlobal);
     direct->set_username(entrante);
@@ -156,7 +156,7 @@ void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
     c_message->set_option(5);
     c_message->set_userid(IdGlobal);
     c_message->set_allocated_directmessage(direct);
-    cout << "id: " << IdGlobal<< endl;
+    cout << "IdGlobal: " << IdGlobal<< endl;
 
     string binary;
     c_message->SerializeToString(&binary);
@@ -167,24 +167,6 @@ void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
     send(fd , cstr , strlen(cstr) , 0 );
     
 }
-
-// void exitChat(){
-//     ExitChat *exit(new ExitChat);
-//     exit->set_userid(IdGlobal);
-    
-//     ClientMessage * message(new ClientMessage);
-//     message->set_option(7);
-//     message->set_userid(IdGlobal);
-//     cout << "id: " << IdGlobal << endl;
-  
-//     string binary;
-//     message->SerializeToString(&binary);
-
-//     char cstr[binary.size() + 1];
-//     strcpy(cstr, binary.c_str());
-
-//     send(fd , cstr , strlen(cstr) , 0 );
-// }
 
 void menu()
 {

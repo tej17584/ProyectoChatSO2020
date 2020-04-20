@@ -16,7 +16,6 @@
 #include "mensaje.pb.h" //include de la libreria
 using namespace std;
 using namespace chat;
-// #include "mensaje.pb.h"
 
 // ------------------------------------------------S T A R T -----------------------------------------//
 #define MAX_CLIENTS 35 // number of students in class (assuming each one will be a client)
