@@ -52,7 +52,53 @@ struct connection_data
 	int opcionServer;
 };
 
+void enviarMensajeDirecto(int ClientSocket, char *Buffer){
+	ClientMessage * message(new ClientMessage); 
+	message->ParseFromString(Buffer); 
 
+	cout << "Mensaje del cliente: " << message->directmessage().message() << endl;
+    cout << "El identificador del cliente es: " << message->userid() << endl;
+
+	int i = 0; 
+	int nuevo_id; 
+	for (i=0; i < MAX_CLIENTS; i++){
+		ClienteData clienteTemporal = listadoClientes[i]; 
+		cout << "\nclienteTemporal.ClientID: "<< clienteTemporal.ClientID << " userid(): " << message->userid() << endl;
+        cout << "\nclienteTemporal.ClientUserName: "<< clienteTemporal.ClientID<< " username(): " << message->directmessage().username() << endl;
+
+		if(clienteTemporal.ClientUserName == message->directmessage().username()){
+			nuevo_id = clienteTemporal.ClientID; 
+		}
+
+	}
+	cout << "El usuario le quiere enviar un nuevo mensaje: " << nuevo_id << endl;
+	DirectMessage * dm(new DirectMessage); 
+	dm->set_message(message->directmessage().message()); 
+	dm->set_userid(nuevo_id); 
+
+	DirectMessageResponse * dr(new DirectMessageResponse); 
+	dr->set_messagestatus("<Enviado>"); 
+	ServerMessage * SM( new ServerMessage); 
+	SM->set_option(8); 
+	SM->set_allocated_message(dm); 
+	SM->set_allocated_directmessageresponse(dr); 
+
+	string binary; 
+	SM->SerializeToString(&binary); 
+	cout <<"Envio de Mensaje directo" << endl; 
+
+	char cstr[binary.size() +1]; 
+	strcpy(cstr, binary.c_str()); 
+	i = 0; 
+	for (i=0; i < MAX_CLIENTS; i++){
+		ClienteData clienteTemporal = listadoClientes[i]; 
+		cout << "\nclienteTemporal.ClienteID: "<< clienteTemporal.ClientID << " userid(): " << nuevo_id << endl;
+
+		if (clienteTemporal.ClientID == nuevo_id){
+			send(ClientSocket, cstr, strlen(cstr), 0); 
+		}
+	}
+}
 
 //OPCION CAMBIO STATUS
 void CambioStatus(int clientSocket, char *Buffer)
@@ -292,6 +338,10 @@ void *connectClient(void *args)
 			else if (OpcionGeneral == 2)
 			{
 				GetUserInfo(cli_socket, buffer);
+			}
+			else if (OpcionGeneral == 4)
+			{
+				enviarMensajeDirecto(cli_socket, buffer);
 			}
 			else
 			{
