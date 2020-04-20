@@ -155,7 +155,7 @@ void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
     ClientMessage * clientMessage(new ClientMessage);
     clientMessage->set_option(5);
     clientMessage->set_userid(IdGlobal);
-    clientMessage->set_allocated_directmessage(direct);
+    clientMessage->set_allocated_directmessage(directMessage);
     cout << "IdGlobal: " << IdGlobal<< endl;
 
     string binary;
