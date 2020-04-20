@@ -95,19 +95,19 @@ void salirCliente(int clientSocket, char *Buffer) {
 	read( clientSocket, Buffer, portno2 ); 
 	ClientMessage* message(new ClientMessage); 
 
-	m->ParseFromString(Buffer); 
-	cout << "El Cliente ID:" m->userid() << "desea abandonar la sesión" << endl; 
+	message->ParseFromString(Buffer); 
+	cout << "El Cliente ID:" message->userid() << "desea abandonar la sesión" << endl; 
 	int i; 
 	for (i = 0; i < MAX_CLIENTS; i++){
 		ClienteData clienteTemporal  = listadoClientes[i]; 
-		if (clienteTemporal.ClientID == m->userid()){
+		if (clienteTemporal.ClientID == message->userid()){
 			ClienteData emptyClient; 
 			listadoClientes[i] = emptyClient; 
 		}
 
 	}
 
-	cout << "El cliente con ID: " << m-> userid() << "ha abandonado la sesión actual" << endl; 
+	cout << "El cliente con ID: " << message-> userid() << "ha abandonado la sesión actual" << endl; 
 
 }
 
@@ -122,19 +122,8 @@ ClienteData obtenerUsuario (int id){
 	ClienteData usuarioTemporal = listadoClientes[0]; 
 	int count = 0; 
 	while (usuarioTemporal.ClientID != id) {
-		cont ++; 
-		usuarioTemporal = listadoClientes[count]
-	}
-	return usuarioTemporal; 
-}
-
-ClienteData obtenerIdUsername(string ClientUserName){
-	ClienteData usuarioTemporal = listadoClientes[0]; 
-	int count = 0; 
-	for (int i=0; i < listadoClientes.size(); i++){
-		if (ClientUserName.compare(listadoClientes[i].ClientUserName) == 0){
-			usuarioTemporal = listadoClientes[count]; 
-		}
+		count ++; 
+		usuarioTemporal = listadoClientes[count]; 
 	}
 	return usuarioTemporal; 
 }
@@ -142,11 +131,11 @@ ClienteData obtenerIdUsername(string ClientUserName){
 void enviarBroadCast(int id, string message, int socket){
 	BroadcastResponse * response( new BroadcastResponse); 
 	response->set_messagestatus("Send"); 
-	ServerMessage * m(new ServerMessage); 
-	m->set_option(7); 
-	m->set_allocated_broadcastresponse(response); 
+	ServerMessage * message(new ServerMessage); 
+	message->set_option(7); 
+	message->set_allocated_broadcastresponse(response); 
 	string binary; 
-	m->SerializeToString(&binary); 
+	message->SerializeToString(&binary); 
 	enviadoPorSocket(binary, socket); 
 	//server se encarga de responder a todos
 	BroadcastResponse * globalResponse( new BroadcastMessage); 
@@ -167,7 +156,7 @@ void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
 	count << "Mensaje directo" << endl; 
 	read (connectfd, Buffer, portno2); 
 
-	ClientMessage * message (new ClientMessage); 
+	ClientMessage * message(new ClientMessage); 
 	message->ParseFromString(Buffer); 
 
 	cout << "Cliente Message: " << message->directmessage().message() << endl; 
