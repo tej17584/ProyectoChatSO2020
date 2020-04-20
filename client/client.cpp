@@ -147,19 +147,19 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 }
 
 void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
-    DirectMessageRequest * direct(new DirectMessageRequest);
-    direct->set_message(message);
-    direct->set_userid(IdGlobal);
-    direct->set_username(entrante);
+    DirectMessageRequest * directMessage(new DirectMessageRequest);
+    directMessage->set_message(message);
+    directMessage->set_userid(IdGlobal);
+    directMessage->set_username(entrante);
 
-    ClientMessage * c_message(new ClientMessage);
-    c_message->set_option(5);
-    c_message->set_userid(IdGlobal);
-    c_message->set_allocated_directmessage(direct);
+    ClientMessage * clientMessage(new ClientMessage);
+    clientMessage->set_option(5);
+    clientMessage->set_userid(IdGlobal);
+    clientMessage->set_allocated_directmessage(direct);
     cout << "IdGlobal: " << IdGlobal<< endl;
 
     string binary;
-    c_message->SerializeToString(&binary);
+    clientMessage->SerializeToString(&binary);
 
     char cstr[binary.size() + 1];
     strcpy(cstr, binary.c_str());
