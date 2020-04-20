@@ -97,7 +97,36 @@ void enviarMensajeDirecto(int ClientSocket, char *Buffer){
 			send(ClientSocket, cstr, strlen(cstr), 0); 
 		}
 	}
+	//DirectMessage * dm2(new DirectMessage); 
+	//dm2->set_message(message); 
+	//ServerMessage * newMessage(new ServerMessage); 
+	//newMessage->set_option(2); 
+	//newMessage->set_allocated_message(dm2); 
+	//binary = ""; 
+	//newMessage->SerializeToString(%binary); 
+	//char cstr[binary.size() +1]; 
+	//strcpy(cstr, binary.c_str()); 
+	
+
 }
+
+void salirCliente (int clientSocket, char *Buffer){
+	ClientMessage * message(new ClientMessage); 
+	message-> ParseFromString(Buffer);
+
+	cout << "El Cliente id: " << message->exitchat().userid() << " desea salir." << endl;
+    int i;
+
+	for (i = 0; i < MAX_CLIENTS; i++){
+		ClienteData clienteTemporal = listadoClientes[i]; 
+		if(clienteTemporal.ClientID == message->exitchat().userid()){
+			ClienteData clienteEliminado; 
+			listadoClientes[i] = clienteEliminado; 
+		}
+	} 
+	cout << "El Client id: " << message->exitchat().userid() << " ha abandonado la sesión." << endl;
+}
+
 
 //OPCION CAMBIO STATUS
 void CambioStatus(int clientSocket, char *Buffer)
@@ -341,6 +370,10 @@ void *connectClient(void *args)
 			else if (OpcionGeneral == 5)
 			{
 				enviarMensajeDirecto(cli_socket, buffer);
+			}
+			else if (OpcionGeneral == 7) 
+			{
+				salirCliente(cli_socket, buffer);
 			}
 			else
 			{
