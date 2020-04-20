@@ -168,6 +168,27 @@ void enviarMensajeDirecto(string entrante,string message,int fd,char *buffer){
     
 }
 
+void salirCliente (){
+    ExitChat *salir(new ExitChat); 
+    salir->set_userid(IdGlobal); 
+
+    ClientMessage * message(new ClientMessage); 
+    message->set_option(7); 
+    message->set_userid(IdGlobal); 
+
+    message->set_allocated_exitchat(salir);
+    cout << "IdGlobal: " << IdGlobal << endl;
+
+    string binary; 
+    message->SerializeToString(&binary); 
+
+    char cstr[binary.size() + 1];
+    strcpy(cstr, binary.c_str());
+
+    send(fd , cstr , strlen(cstr) , 0 ); 
+
+}
+
 void menu()
 {
     if (inicio == true) {
