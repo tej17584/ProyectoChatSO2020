@@ -143,9 +143,7 @@ void GetUserInfo(int clientSocket, char *Buffer)
 		cout << "El UserName a consultar es: " << m->connectedusers().username() << endl;
 		//Construimos  un connectedUserResponse
 		ConnectedUserResponse *CUR(new ConnectedUserResponse);
-		//Construimos un connectedUSerREquest
-		ConnectedUser *cu = CUR->add_connectedusers();
-
+		bool encontrado;
 		//Buscamos la info de la persona
 		//Cambiamos el estado
 		int i;
@@ -155,27 +153,50 @@ void GetUserInfo(int clientSocket, char *Buffer)
 
 			if (Cliente.ClientUserName == m->connectedusers().username())
 			{
+				//Construimos un connectedUSerREquest
+				ConnectedUser *cu = CUR->add_connectedusers();
 				//Asignamos valores al protocolo
 				cu->set_userid(Cliente.ClientID);
 				cu->set_username(Cliente.ClientUserName);
 				cu->set_ip(Cliente.ClientIP);
 				cu->set_status(Cliente.ClientStatus);
+				encontrado = true;
 			}
 		}
 
-		//Construimos mensaje dle server
-		ServerMessage *server_res(new ServerMessage);
-		//El 5 es la response del usuario
-		server_res->set_option(5);
-		server_res->set_allocated_connecteduserresponse(CUR);
-		// Se serializa la respuesta a string
-		string binary;
-		server_res->SerializeToString(&binary);
+		if (encontrado == true)
+		{
+			//Construimos mensaje dle server
+			ServerMessage *server_res(new ServerMessage);
+			//El 5 es la response del usuario
+			server_res->set_option(5);
+			server_res->set_allocated_connecteduserresponse(CUR);
+			// Se serializa la respuesta a string
+			string binary;
+			server_res->SerializeToString(&binary);
 
-		char cstr[binary.size() + 1];
-		strcpy(cstr, binary.c_str());
-		send(clientSocket, cstr, strlen(cstr), 0);
-		cout << "Enviando info al cliente" << endl;
+			char cstr[binary.size() + 1];
+			strcpy(cstr, binary.c_str());
+			send(clientSocket, cstr, strlen(cstr), 0);
+			cout << "Enviando info al cliente" << endl;
+		}
+		else if (encontrado == false)
+		{
+			//Construimos mensaje dle server
+			ServerMessage *server_res(new ServerMessage);
+			//El 3 es para error
+			server_res->set_option(3);
+			ErrorResponse *error(new ErrorResponse);
+			error->set_errormessage("NO existe ningun usuario con ese nombre, intenta otra vez");
+
+			string binary;
+			server_res->SerializeToString(&binary);
+
+			char cstr[binary.size() + 1];
+			strcpy(cstr, binary.c_str());
+			send(clientSocket, cstr, strlen(cstr), 0);
+			cout << "Enviando info de ERROR al cliente" << endl;
+		}
 	}
 }
 

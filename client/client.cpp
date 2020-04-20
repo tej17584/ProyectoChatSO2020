@@ -22,10 +22,10 @@ char buffer[BUFSIZE];
 string entryStatus;
 string status = "Activo";
 
-string usuario; //se guarda nombre de usuario
+string usuario;    //se guarda nombre de usuario
 string usuarioInf; //se guarda nombre de usuario
-string ip;      //se guarda la ip del usuario
-int IdGlobal;   //id global para el user
+string ip;         //se guarda la ip del usuario
+int IdGlobal;      //id global para el user
 void error(const char *msg)
 {
     perror(msg);
@@ -63,10 +63,17 @@ void obtenerInfoUsuario(int ClienteIdP, string ClientUserName, int sockfd, char 
     ServerResponse->ParseFromString(Buffer);
     //Construimos  un connectedUserResponse
 
-    cout << "El nombre consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).username() << endl;
-    cout << "El ID consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).userid() << endl;
-    cout << "El IP consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).ip() << endl;
-    cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).status() << endl;
+    if (ServerResponse->connecteduserresponse().connectedusers_size() != 0)
+    {
+        cout << "El nombre consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).username() << endl;
+        cout << "El ID consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).userid() << endl;
+        cout << "El IP consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).ip() << endl;
+        cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(0).status() << endl;
+    }
+    else if (ServerResponse->connecteduserresponse().connectedusers_size() <= 0)
+    {
+        cout << "ERROR NO EXISTE ESE USUARIO: " << ServerResponse->error().errormessage() << endl;
+    }
 }
 
 //Metodo para obtener toda la info
@@ -98,17 +105,23 @@ void obtenerInfoAllUsers(int sockfd, char *Buffer)
     //s_message->ParseFromString(ret);
     ServerResponse->ParseFromString(Buffer);
     //Construimos  un connectedUserResponse
-
     int i = 0;
-    for (i; i < ServerResponse->connecteduserresponse().connectedusers().size(); i++)
+    if (ServerResponse->connecteduserresponse().connectedusers().size() > 0)
     {
-        cout << "------------------------------------------------------" << endl;
-        cout << "Cliente NO: " << i << endl;
-        cout << "El nombre consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).username() << endl;
-        cout << "El ID consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).userid() << endl;
-        cout << "El IP consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).ip() << endl;
-        cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).status() << endl;
-        cout << "------------------------------------------------------" << endl;
+        for (i; i < ServerResponse->connecteduserresponse().connectedusers().size(); i++)
+        {
+            cout << "------------------------------------------------------" << endl;
+            cout << "Cliente NO: " << i << endl;
+            cout << "El nombre consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).username() << endl;
+            cout << "El ID consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).userid() << endl;
+            cout << "El IP consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).ip() << endl;
+            cout << "El status consultado es: " << ServerResponse->connecteduserresponse().connectedusers(i).status() << endl;
+            cout << "------------------------------------------------------" << endl;
+        }
+    }
+    else if (ServerResponse->connecteduserresponse().connectedusers().size() <= 0)
+    {
+        cout << "Hubo un error al obtener la informacion de los clientes." << i << endl;
     }
 }
 
@@ -144,7 +157,8 @@ void CambioStatus(int ClienteIdP, string ClientStatusP, int sockfd, char *Buffer
 
 void menu()
 {
-    if (inicio == true) {
+    if (inicio == true)
+    {
         cout << "\n";
         cout << "---------------------------------------------------\n";
         cout << "Bienvenido a Chat SISTOS " << usuario << "\n";
@@ -159,8 +173,9 @@ void menu()
         cout << "---------------------------------------------------\n";
         cout << "\n";
     }
-    
-    else if (inicio == false) {
+
+    else if (inicio == false)
+    {
         cout << "---------------------------------------------------\n";
         cout << "Usuario: " << usuario << "\n";
         cout << "ESTATUS ACTUAL: " << status << "\n";
@@ -175,7 +190,7 @@ void menu()
         cout << "---------------------------------------------------\n";
         cout << "\n";
     }
-    
+
     inicio = false;
 
     cout << "Introduzca la opcion que desea ejecutar (1-6): \n";
@@ -184,76 +199,78 @@ void menu()
     cout << "---------------------------------------------------\n";
     cout << "\n";
 
-    while (entrada < 1 || entrada > 6);
+    while (entrada < 1 || entrada > 6)
+        ;
 
     switch (entrada)
     {
-        //Mensaje directo
-        case 1:
-            break;
+    //Mensaje directo
+    case 1:
+        break;
 
-        //Broadcast
-        case 2:
-            break;
+    //Broadcast
+    case 2:
+        break;
 
-        //Cambio de status
-        case 3:
-            cout << "Cambio de estatus\n";
-            cout << "Ingrese el numero de la opcion que desea:\n";
-            cout << "1. Activo\n";
-            cout << "2. Ocupado\n";
-            cout << "3. Inactivo\n";
-            cout << "\n";
-            cout << "Introduzca la opcion que desea ejecutar (1-3): \n";
-            cin >> entryStatus;
-            cout << "\n";
-            
-            while (entryStatus != "0")
+    //Cambio de status
+    case 3:
+        cout << "Cambio de estatus\n";
+        cout << "Ingrese el numero de la opcion que desea:\n";
+        cout << "1. Activo\n";
+        cout << "2. Ocupado\n";
+        cout << "3. Inactivo\n";
+        cout << "\n";
+        cout << "Introduzca la opcion que desea ejecutar (1-3): \n";
+        cin >> entryStatus;
+        cout << "\n";
+
+        while (entryStatus != "0")
+        {
+            if (entryStatus == "1")
             {
-                if (entryStatus == "1")
-                {
-                    status = "Activo";
-                    CambioStatus(IdGlobal, status, sockfd, buffer);
-                    menu();
-                }
-                else if (entryStatus == "2")
-                {
-                    status = "Ocupado";
-                    CambioStatus(IdGlobal, status, sockfd, buffer);
-                    menu();
-                }
-                else if (entryStatus == "3")
-                {
-                    status = "Inactivo";
-                    CambioStatus(IdGlobal, status, sockfd, buffer);
-                    menu();
-                }
-                else
-                {
-                    cout << "ERROR! Ingrese un opcion valida\n";
-                    menu();
-                }
+                status = "Activo";
+                CambioStatus(IdGlobal, status, sockfd, buffer);
+                menu();
             }
+            else if (entryStatus == "2")
+            {
+                status = "Ocupado";
+                CambioStatus(IdGlobal, status, sockfd, buffer);
+                menu();
+            }
+            else if (entryStatus == "3")
+            {
+                status = "Inactivo";
+                CambioStatus(IdGlobal, status, sockfd, buffer);
+                menu();
+            }
+            else
+            {
+                cout << "ERROR! Ingrese un opcion valida\n";
+                menu();
+            }
+        }
 
-        //Listado de usuarios
-        case 4:
-            obtenerInfoAllUsers(sockfd, buffer);
-            break;
+    //Listado de usuarios
+    case 4:
+        obtenerInfoAllUsers(sockfd, buffer);
+        break;
 
-        //Informacion de usuario
-        case 5:
-            cout << "Ingrese el usuario que desea ver: \n";
-            while (getline(cin, usuarioInf))
+    //Informacion de usuario
+    case 5:
+        cout << "Ingrese el usuario que desea ver: \n";
+        while (getline(cin, usuarioInf))
             if (usuarioInf != "")
                 break;
-            cout << "\n";
-            obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
-            break;
-                
-        //salir
-        case 6:
-            break;
-        while (entrada != 6);
+        cout << "\n";
+        obtenerInfoUsuario(IdGlobal, usuarioInf, sockfd, buffer);
+        break;
+
+    //salir
+    case 6:
+        break;
+        while (entrada != 6)
+            ;
     }
 }
 
