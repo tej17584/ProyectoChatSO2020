@@ -52,6 +52,8 @@ struct connection_data
 	int opcionServer;
 };
 
+
+
 //OPCION CAMBIO STATUS
 void CambioStatus(int clientSocket, char *Buffer)
 {
@@ -89,117 +91,6 @@ void CambioStatus(int clientSocket, char *Buffer)
 	char cstr[binary.size() + 1];
 	strcpy(cstr, binary.c_str());
 	send(clientSocket, cstr, strlen(cstr), 0);
-}
-
-void salirCliente(int clientSocket, char *Buffer) {
-	read( clientSocket, Buffer, portno2 ); 
-	ClientMessage* message(new ClientMessage); 
-
-	message->ParseFromString(Buffer); 
-	cout << "El Cliente ID:" message->userid() << "desea abandonar la sesión" << endl; 
-	int i; 
-	for (i = 0; i < MAX_CLIENTS; i++){
-		ClienteData clienteTemporal  = listadoClientes[i]; 
-		if (clienteTemporal.ClientID == message->userid()){
-			ClienteData emptyClient; 
-			listadoClientes[i] = emptyClient; 
-		}
-
-	}
-
-	cout << "El cliente con ID: " << message-> userid() << "ha abandonado la sesión actual" << endl; 
-
-}
-
-void enviadoPorSocket (string mensaje, int socket){ 
-	char buffer[1024] = {0}; 
-	strcpy(buffer, mensaje.c_str());
-
-	send(socket, buffer, mensaje.size() + 1, 0);
-}
-
-ClienteData obtenerUsuario (int id){
-	ClienteData usuarioTemporal = listadoClientes[0]; 
-	int count = 0; 
-	while (usuarioTemporal.ClientID != id) {
-		count ++; 
-		usuarioTemporal = listadoClientes[count]; 
-	}
-	return usuarioTemporal; 
-}
-
-void enviarBroadCast(int id, string message, int socket){
-	BroadcastResponse * response( new BroadcastResponse); 
-	response->set_messagestatus("Send"); 
-	ServerMessage * message(new ServerMessage); 
-	message->set_option(7); 
-	message->set_allocated_broadcastresponse(response); 
-	string binary; 
-	message->SerializeToString(&binary); 
-	enviadoPorSocket(binary, socket); 
-	//server se encarga de responder a todos
-	BroadcastResponse * globalResponse( new BroadcastMessage); 
-	globalResponse->set_userid(id); 
-	globalResponse->set_message(message); 
-	ServerMessage * globalMessage( new ServerMessage ); 
-	globalMessage->set_option(1); 
-	globalMessage->set_allocated_broadcast(globalResponse); 
-	binary; 
-	globalMessage->SerializeToString(&binary); 
-	for (int i = 0; i < listadoClientes.size(); i++){
-		ClienteData clienteTemporal = obtenerUsuario(i); 
-		printf("%d\n", clienteTemporal.ClientID);
-		enviadoPorSocket(binary, clienteTemporal.fdconn)
-	}
-}
-void enviarMensajeDirecto (int listenfd, int connectfd, char *Buffer){
-	cout << "Mensaje directo" << endl; 
-	read (connectfd, Buffer, portno2); 
-
-	ClientMessage * message(new ClientMessage); 
-	message->ParseFromString(Buffer); 
-
-	cout << "Cliente Message: " << message->directmessage().message() << endl; 
-	cout << "El identificador del cliente que desea enviar el mensaje:" << message->userid() << endl; 
-	
-	int i, id_nuevo; 
-	for (i=0; i < MAX_CLIENTS; i++){
-		ClienteData clienteTemporal = listadoClientes[i]; 
-		cout << "\nc.id: "<< clienteTemporal.id << " userid(): " << message->userid() << endl;
-        cout << "\nc.username: "<< clienteTemporal.username<< " username(): " << message->directmessage().username() << endl;
-        if(clienteTemporal.username == message->directmessage().username()){
-			id_nuevo = clienteTemporal.ClientID;
-
-		}
-			 
-	}
-	cout << "El identificador del cliente que desea enviar el mensaje: " << id_nuevo << endl;
-	DirectMessageResponse * directmessage( new DirectMessage); 
-	directmessage->set_message(message->directmessage().message()); 
-	directmessage->set_userid(id_nuevo); 
-
-	DirectMessageResponse * directmessageres(new DirectMessageResponse); 
-	directmessageres->set_messagestatus("Mensaje enviado"); 
-	ServerMessage * serverMess(new ServerMessage); 
-	serverMess->set_option(8); 
-	serverMess->set_allocated_message(directmessage); 
-	serverMess->set_allocated_directmessageresponse(directmessageres); 
-
-	string binary; 
-	serverMess->SerializeToString(&binary); 
-    char cstr[binary.size() + 1];
-    strcpy(cstr, binary.c_str());
-
-	int i; 
-	for (i=0; i < MAX_CLIENTS; i++){
-		ClienteData clienteTemporal = listadoClientes[i]; 
-		cout << "\nc.id: "<< c.id << " userid(): " << id_nuevo << endl;
-		if (clienteTemporal.ClientID == id_nuevo){
-			send(connectfd, cstr, strlen(cstr), 0); 
-		}
-
-	}
-
 }
 
 //OPCION CAMBIO STATU
@@ -401,14 +292,6 @@ void *connectClient(void *args)
 			else if (OpcionGeneral == 2)
 			{
 				GetUserInfo(cli_socket, buffer);
-			}
-			else if (OpcionGeneral == 4)
-			{
-				enviarBroadCast(tid, buffer, cli_socket);
-			}
-			else if (OpcionGeneral == 5)
-			{
-				enviarMensajeDirecto(tid, buffer,  cli_socket);
 			}
 			else
 			{
