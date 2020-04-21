@@ -21,7 +21,9 @@
 Este proyecto es parte del curso de Sistemas Operativos de la Universidad del Valle de Guatemala. El objetivo es crear un chat mediante uno o varios clientes que se comunican por medio de un servidor. Esto es posible mediante la implementación de sockets, pthreads y el uso de comunicación de procesos para logar un mejor manejo de recursos y viabilidad. También está basado en el medio de Protocolo de Google llamado Protobuf. 
 
 ## Requisitos:
-
+* Protobuf de google links en documentación.
+* Compilador de C (GCC y G++)
+* Un sabor de Ubuntu
 
 
 ## Compilación
