@@ -370,7 +370,6 @@ int main(int argc, char *argv[])
     char cstr2[binary2.size() + 1];
     strcpy(cstr2, binary2.c_str());
     send(sockfd, cstr2, strlen(cstr2), 0);
-    printf("PASO 3 Ya le dije al sERVER QUE SI QUIERO SER SU AMIGO\n");
 
     char bufOpcion[BUFSIZE];
 
